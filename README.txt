@@ -190,8 +190,14 @@ PyQt 4.11.4,                https://www.riverbankcomputing.com/software/pyqt/dow
                                               Authors
                                               ~~~~~~~
 
-                        Abhijit Jeremiel Theophilus        abhitheo96@gmail.com      
-                           Mohinish Lokesh Reddy        mohinishlokesh96@gmail.com
+Principal Authors
+--------- -------
+Abhijit Jeremiel Theophilus, abhitheo96@gmail.com      
+Mohinish Lokesh Reddy, mohinishlokesh96@gmail.com
+
+Design
+------
+Suryoday Basak, suryodaybasak@gmail.com
 
 
 ====================================================================================================
