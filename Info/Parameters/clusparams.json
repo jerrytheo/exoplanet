@@ -1,0 +1,74 @@
+{"Clustering" : {
+	
+	"K-Means" : {
+		
+		"n_clusters" : {
+            "type" : "int",
+            "min" : 1,
+            "title" : "Clusters",
+            "hint" : "Number of clusters/centroids to generate.",
+            "default" : 8
+        },
+
+        "max_iter" : {
+            "type" : "int",
+            "title" : "Iterations (per run)",
+            "hint" : "Number of iterations for each centroid initialisation.",
+            "min" : 1,
+            "default" : 300
+        },
+
+        "n_init" : {
+        	"type" : "int",
+            "title" : "Total Iterations",
+            "hint" : "Number of times to run with different centroid. Best result picked by inertia.",
+            "min" : 1,
+            "default" : 10
+        },
+
+        "init" : {
+        	"type" : "combo",
+            "title" : "Centroid Initialisation Method",
+            "hint" : "K-Means++ : Pick relatively distance centroids. Random : Random selection of centroids.",
+            "opts" : ["K-Means++", "Random"],
+            "vals" : ["k-means++", "random"]
+        },
+
+        "precompute_distances" : {
+            "type" : "combo",
+            "title" : "Precompute Distances",
+            "hint" : "Precomputing Distances can be faster but takes up more memory.",
+            "opts" : ["Auto", "No", "Yes"],
+            "vals" : ["auto", false, true]
+        },
+
+        "tol" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Tolerance",
+            "hint" : "Relative tolerance with regards to inertia to declare convergence",
+            "default" : 0.0001
+        },
+
+        "n_jobs" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "CPU cores",
+            "hint" : "Number of parallel jobs to run. Set 0 to use all CPU cores.",
+            "default" : 1,
+            "0" : -1
+        },
+
+        "random_state" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Seed",
+            "hint" : "Seed for the random number generator.",
+            "default" : 0,
+            "0" : null
+        },
+
+        "verbose" : 0,
+        "copy_x" : true
+	}
+}}

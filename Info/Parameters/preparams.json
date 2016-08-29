@@ -1,0 +1,29 @@
+{"Pre-Processing" : {
+	"Polynomial Features" : {
+        "degree" : {
+            "type" : "int",
+            "title" : "Polynomial Degree",
+            "hint" : "Degree of polynomial to fit.",
+            "min" : 1,
+            "default" : 1,
+            "conditions" : {
+                "x > 1" : [["interaction_only", true], ["include_bias", true]],
+                "x == 1" : [["interaction_only", false], ["include_bias", false]]
+            }
+        },
+        "interaction_only" : {
+            "type" : "combo",
+            "title" : "Only interactive features",
+            "hint" : "Features that are products of at\nmost degree distinct input features.\nE.g: for degree 3, x[0]*x[1]*x[2]\nBut not x[0]**2, x[1]*x[2]",
+            "opts" : ["No", "Yes"],
+            "vals" : [false, true]
+        },
+        "include_bias" : {
+            "type" : "combo",
+            "title" : "Include bias column",
+            "hint" : "Column where all polynomial powers are zero.",
+            "opts" : ["Yes", "No"],
+            "vals" : [true, false]
+        }
+    }
+}}

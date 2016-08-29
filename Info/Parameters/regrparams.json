@@ -1,0 +1,166 @@
+{"Regression" : {
+
+
+    "Linear" : {
+        "fit_intercept" : {
+            "type" : "combo",
+            "title" : "Intercept",
+            "hint" : "Calculate the intercept for this model.",
+            "opts" : ["Yes", "No"],
+            "vals" : [true, false]
+        },
+        "normalize" : {
+            "type" : "combo",
+            "title" : "Normalize",
+            "hint" : "Normalize regressors.",
+            "opts" : ["No", "Yes"],
+            "vals" : [false, true]
+        },
+        "n_jobs" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "CPU cores",
+            "hint" : "Number of parallel jobs to run for neighbors search. Set 0 to use all CPU cores.",
+            "default" : 1,
+            "0" : -1
+        },
+        "copy_X" : true
+    },
+
+    "Lasso" : {
+        "alpha" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Alpha",
+            "hint" : "Alpha regularisation parameter. Scales the L1 term.",
+            "default" : 1.0
+        },
+        "fit_intercept" : {
+            "type" : "combo",
+            "title" : "Intercept",
+            "hint" : "Calculate the intercept for this model.",
+            "opts" : ["Yes", "No"],
+            "vals" : [true, false]
+        },
+        "normalize" : {
+            "type" : "combo",
+            "title" : "Normalize",
+            "hint" : "Normalize regressors.",
+            "opts" : ["No", "Yes"],
+            "vals" : [false, true]
+        },
+        "precompute" : {
+            "type" : "combo",
+            "title" : "Gram Matrix",
+            "hint" : "Precompute Gram Matrix to speed up calculations.",
+            "opts" : ["Do not precompute", "Precompute"],
+            "vals" : [false, true]
+        },
+        "max_iter" : {
+            "type" : "int",
+            "title" : "Max. Iterations",
+            "hint" : "Maximum Number of Iterations",
+            "min" : 1,
+            "default" : 1000
+        },
+        "tol" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Tolerance",
+            "hint" : "Tolerance for stopping criterion.",
+            "default" : 0.0001
+        },
+        "positive" : {
+            "type" : "combo",
+            "title" : "Coefficients",
+            "hint" : "Force coefficients to be positive.",
+            "opts" : ["Only positive", "No restriction"],
+            "vals" : [false, true]
+        },
+        "selection" : {
+            "type" : "combo",
+            "title" : "Coefficient update",
+            "hint" : "Random - random coefficient updated at every iteration. Cyclic - update coefficients sequentially.",
+            "opts" : ["Random", "Cyclic"],
+            "vals" : ["random", "cyclic"]
+        },
+        "random_state" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Seed",
+            "hint" : "Seed for the random number generator.",
+            "default" : 0,
+            "0" : null
+        },
+        "copy_X" : true,
+        "warm_start" : false
+    },
+
+    "Ridge" : {
+        "alpha" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Alpha",
+            "hint" : "Alpha regularisation parameter. Scales the L1 term.",
+            "default" : 1.0
+        },
+        "fit_intercept" : {
+            "type" : "combo",
+            "title" : "Intercept",
+            "hint" : "Calculate the intercept for this model.",
+            "opts" : ["Yes", "No"],
+            "vals" : [true, false]
+        },
+        "normalize" : {
+            "type" : "combo",
+            "title" : "Normalize",
+            "hint" : "Normalize regressors.",
+            "opts" : ["No", "Yes"],
+            "vals" : [false, true]
+        },
+        "max_iter" : {
+            "type" : "int",
+            "title" : "Max. Iterations",
+            "hint" : "Maximum Number of Iterations",
+            "min" : 1,
+            "default" : 1000
+        },
+        "tol" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Tolerance",
+            "hint" : "Tolerance for stopping criterion.",
+            "default" : 0.0001
+        },
+        "random_state" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Seed",
+            "hint" : "Seed for the random number generator.",
+            "default" : 0,
+            "0" : null
+        },
+        "solver" : {
+            "type" : "combo",
+            "title" : "Solver",
+            "hint" : "Solver to use in the computational routines.",
+            "opts" : [
+                "Auto",
+                "Single Value Decomposition",
+                "Cholesky",
+                "Sparse Conjugate Gradient",
+                "Regularized Least-Squares",
+                "Stochastic Average Gradient Descent"
+            ],
+            "vals" : ["auto", "svd", "cholesky", "sparse_cg", "lsqr", "sag"],
+            "conditions" : {
+                "Auto" : [["random_state", false]],
+                "Single Value Decomposition" : [["random_state", false]],
+                "Cholesky" : [["random_state", false]],
+                "Sparse Conjugate Gradient" : [["random_state", false]],
+                "Regularized Least-Squares" : [["random_state", false]],
+                "Stochastic Average Gradient Descent" : [["random_state", true]]
+            }
+        }
+    }
+}}

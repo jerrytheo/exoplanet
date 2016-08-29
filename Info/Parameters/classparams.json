@@ -1,0 +1,279 @@
+{"Classification" : {
+        
+    
+    "K-Nearest Neighbors" : {
+        
+        "n_neighbors" : {
+            "type" : "int",
+            "min" : 1,
+            "title" : "Neighbors",
+            "hint" : "Number of neighbors to use.",
+            "default" : 5
+        },
+        "weights" : {
+            "type" : "combo",
+            "title" : "Weight Function",
+            "hint" : "Weight Function to be used in predictions.",
+            "opts" : ["Uniform Weights", "Weights by the inverse of their distance"],
+            "vals" : ["uniform", "distance"]
+        },
+        "algorithm" : {
+            "type" : "combo",
+            "title" : "Algorithm",
+            "hint" : "Algorithm used to compute the nearest neighbours.",
+            "opts" : ["Auto", "Ball Tree", "k-D Tree", "Brute"],
+            "vals" : ["auto", "ball_tree", "kd_tree", "brute"],
+            "conditions" : {
+                "Auto" : [["leaf_size", false]],
+                "Brute" : [["leaf_size", false]],
+                "Ball Tree" : [["leaf_size", true]],
+                "k-D Tree" : [["leaf_size", true]]
+            }
+        },
+        "leaf_size" : {
+            "type" : "int",
+            "min" : 1,
+            "title" : "Leaf Size",
+            "hint" : "Enter the leaf size to be passed to the Ball Tree or k-D Tree Algorithm.",
+            "default" : 30
+        },
+        "metric" : {
+            "type" : "combo",
+            "title" : "Distance Metric",
+            "hint" : "Distance Metric to be used for the tree.",
+            "opts" : ["Minkowski", "Euclidean", "Manhattan", "Chebyshev"],
+            "vals" : ["minkowski", "euclidean", "manhattan", "chebyshev"],
+            "conditions" : {
+                "Minkowski" : [["p", true]],
+                "Euclidean" : [["p", false]],
+                "Manhattan" : [["p", false]],
+                "Chebyshev" : [["p", false]]
+            }
+        },
+        "p" : {
+            "type" : "int",
+            "min" : 1,
+            "title" : "Power",
+            "hint" : "Power parameter for the Minkowski Metric.",
+            "default" : 1
+        },
+        "n_jobs" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "CPU cores",
+            "hint" : "Number of parallel jobs to run for neighbors search. Set 0 to use all CPU cores.",
+            "default" : 1,
+            "0" : -1
+        }
+    },
+
+
+    "Decision Tree" : {
+
+        "criterion" : {
+            "type" : "combo",
+            "title" : "Criterion",
+            "hint" : "The function to measure the quality of a split.",
+            "opts" : ["Gini", "Entropy"],
+            "vals" : ["gini", "entropy"]
+        },
+        "splitter" : {
+            "type" : "combo",
+            "title" : "Split Strategy",
+            "hint" : "The strategy used to choose the split at each node.",
+            "opts" : ["Best", "Random"],
+            "vals" : ["best", "random"]
+        }, 
+        "max_features" : {
+            "type" : "multi",
+            "types" : ["combo", "int", "float"],
+            "min" : 1,
+            "fmin" : 0,
+            "fmax" : 1,
+            "title" : "Max. Features",
+            "hint" : "The number of features to consider when looking for the best split.",
+            "opts" : ["All", "Square root", "Log base 2"],
+            "vals" : [null, "sqrt", "log2"]
+        },
+        "max_depth" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Max. Depth",
+            "hint" : "The maximum depth of the tree. Enter 0 for no limit.",
+            "default" : 0,
+            "0" : null
+        },
+        "min_samples_split" : {
+            "type" : "int",
+            "min" : 1,
+            "title" : "Min. Samples at Split",
+            "hint" : "The minimum number of samples required to split an internal node.",
+            "default" : 2
+        },
+        "min_samples_leaf" : {
+            "type" : "int",
+            "min" : 1,
+            "title" : "Min. Samples at Leaf",
+            "hint" : "The minimum number of samples required to be at a leaf node.",
+            "default" : 1
+        },
+        "max_leaf_nodes" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Max. Leaves",
+            "hint" : "Grow a tree with specified leaves in best-first fashion. Best nodes are defined by their relative reduction in impurity. Enter 0 for no limit on the number of leaf nodes.",
+            "default" : 0,
+            "0" : null,
+            "conditions" : {
+                "x == 0" : [["max_depth", true]],
+                "x != 0" : [["max_depth", false]]
+            }
+        },
+        "random_state" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Seed",
+            "hint" : "Seed for the random number generator.",
+            "default" : 0,
+            "0" : null
+        },
+        "presort" : {
+            "type" : "combo",
+            "title" : "Presort Data",
+            "hint" : "Presort data to speed up finding best splits in fitting. Can slow down training for large datasets.",
+            "opts" : ["No", "Yes"],
+            "vals" : [false, true]
+        }
+    },
+
+
+    "Linear Discriminant Analysis" : {
+        "solver" : {
+            "type" : "combo",
+            "title" : "Solver",
+            "hint" : "Solver algorithm to run.",
+            "opts" : ["Single Value Decomposition", "Least Squares","Eigen Value Decomposition"],
+            "vals" : ["svd", "lsqr", "eigen"],
+            "conditions" : {
+                "Single Value Decomposition" : [["shrinkage", false]],
+                "Least Squares" : [["shrinkage", true]],
+                "Eigen Value Decomposition" : [["shrinkage", true]]
+            }
+        },
+        "shrinkage" : {
+            "type" : "multi",
+            "types" : ["combo", "float"],
+            "title" : "Shrinkage",
+            "hint" : "Shrinkage Parameters.",
+            "fmin" : 0,
+            "fmax" : 1,
+            "opts" : ["None", "Auto"],
+            "vals" : [null, "auto"]
+        },
+        "n_components" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Dimensions",
+            "hint" : "Number of components for dimensionality reduction.",
+            "0" : null,
+            "default" : 0
+        },
+        "tol" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Tolerance",
+            "hint" : "Threshold value used for rank estimation.",
+            "default" : 0.0001
+        },
+        "store_covariance" : false 
+    },
+
+
+    "Support Vector Classifier" : {
+        "C" : {
+            "type" : "float",
+            "title" : "C",
+            "hint" : "Penalty paramter C of the error term.",
+            "fmin" : 0.0,
+            "default" : 1.0
+
+        },
+        "kernel" : {
+            "type" : "combo",
+            "title" : "Kernel",
+            "hint" : "The type of kernel function to be used in the Algorithm.",
+            "opts" : ["Linear", "Polynomial", "RBF", "Sigmoid","Precomputed"],
+            "vals" : ["linear", "poly", "rbf", "sigmoid","precomputed"],
+            "conditions" : {
+                "Linear" : [["degree", false], ["gamma", false], ["coef0", false]],
+                "Polynomial" : [["degree", true], ["gamma", true], ["coef0", true]],
+                "RBF" : [["degree", false], ["gamma", true], ["coef0", false]],
+                "Sigmoid" : [["degree", false], ["gamma", true], ["coef0", true]],
+                "Precomputed" : [["degree", false], ["gamma", false], ["coef0", false]]
+            }
+        },
+        "degree" : {
+            "type" : "int",
+            "title" : "Degree",
+            "hint" : "Degree of the polynomial kernel.",
+            "min" : 1,
+            "default" : 3
+        },
+        "gamma" : {
+            "type" : "float",
+            "title" : "Gamma",
+            "hint" : "Kernel coefficient for RBF, Polynomial and Sigmoid Kernel.",
+            "fmin" : 0,
+            "default" : 0.005
+        },
+        "coef0" : {
+            "type" : "float",
+            "title" : "Constant Term",
+            "hint" : "Independent term in kernel Function. Used only with Polynomial and Sigmoid Kernel.",
+            "default" : 0.0
+        },
+        "shrinking" : {
+            "type" : "combo",
+            "title" : "Shrink",
+            "hint" : "Whether to use shrinking heuristic.",
+            "opts" : ["No", "Yes"],
+            "vals" : [false, true]
+        },
+        "tol" : {
+            "type" : "float",
+            "fmin" : 0,
+            "title" : "Tolerance",
+            "hint" : "Tolerance for stopping criterion.",
+            "default" : 0.001
+        },
+        "cache_size" : {
+            "type" : "float",
+            "title" : "Cache Size",
+            "hint" : "The size of the kernel Cache (in MB).",
+            "default" : 200
+
+        },
+        "max_iter" : {
+            "type" : "int",
+            "title" : "Max. Iterations",
+            "hint" : "Hard Limit on iterations within solver. 0 taken for no limit.",
+            "min" : 0,
+            "default" : 0,
+            "0" : -1
+        },
+        "random_state" : {
+            "type" : "int",
+            "min" : 0,
+            "title" : "Seed",
+            "hint" : "Seed for the random number generator.",
+            "default" : 0,
+            "0" : null
+        },
+        "probability" : true,
+        "decision_function_shape" : "ovr"
+    },
+
+
+    "Gaussian Naive Bayes" : {}
+
+}}
