@@ -21,7 +21,7 @@ def startLogs():
     logdir = os.getcwd()
     logdir = os.path.join(logdir, 'logs')
     if not os.path.isdir(logdir):
-        os.path.mkdir(logdir)
+        os.mkdir(logdir)
     dt = str(date.today()).split('-')
     dt.reverse()
     dt[2] = dt[2].split('0')[1]

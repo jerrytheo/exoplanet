@@ -187,8 +187,8 @@ PyQt 4.11.4,                https://www.riverbankcomputing.com/software/pyqt/dow
 
 ====================================================================================================
 
-                                              Authors
-                                              ~~~~~~~
+                                            Contributors
+                                            ~~~~~~~~~~~~
 
 Principal Authors
 --------- -------
