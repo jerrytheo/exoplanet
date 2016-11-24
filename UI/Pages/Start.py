@@ -35,7 +35,6 @@ class Start(ExoBase):
             1. Sets layout.
             2. Connects the clicked signals for createButton and loadButton.
         '''
-
         super().initUI(layout, scroll=False)
         self.createButton.clicked.connect(self.parent().buttonClicked)
         self.loadButton.clicked.connect(self.parent().buttonClicked)

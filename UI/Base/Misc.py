@@ -2,16 +2,12 @@
 # Imports
 # =======
 
-
 import sys
 from PyQt4 import QtGui, QtCore
 
 
-#-----------------------------------------------------------------------------#
-
 # Get Integer Widget
 # === ======= ======
-
 
 class MultiInput(QtGui.QWidget):
 
@@ -29,10 +25,10 @@ class MultiInput(QtGui.QWidget):
         self.setLayout(layout)
         try:
             self.setDefault(kwargs)
-        except: pass
+        except:
+            pass
         self.show()
 
-    
     def createLayout(self, intIP, floatIP, **info):
         '''
         Creates the layout of the widget.
@@ -47,7 +43,7 @@ class MultiInput(QtGui.QWidget):
         self._comb.addItems(self.opts)
         self._comb.currentIndexChanged[int].connect(self.changeUI)
         grid.addWidget(self._comb, 0, 0)
-        
+
         if intIP:
             self.opts.append('int')
             self._comb.addItem('Enter Integer')
@@ -57,7 +53,7 @@ class MultiInput(QtGui.QWidget):
                 input_valid.setBottom(info['min'])
             if 'max' in info:
                 input_valid.setTop(info['max'])
-            
+
             self._edit_int.setValidator(input_valid)
             if 'default' in info:
                 self._edit_int.setText(str(info['default']))
@@ -73,7 +69,7 @@ class MultiInput(QtGui.QWidget):
                 input_valid.setBottom(info['fmin'])
             if 'fmax' in info:
                 input_valid.setTop(info['fmax'])
-            
+
             self._edit_float = QtGui.QLineEdit(self)
             self._edit_float.setValidator(input_valid)
             if 'fdefault' in info:
@@ -83,7 +79,6 @@ class MultiInput(QtGui.QWidget):
 
         return grid
 
-    
     def changeUI(self, index):
         '''
         Displays the QLineEdit widget only if needed and disables it otherwise.
@@ -101,7 +96,6 @@ class MultiInput(QtGui.QWidget):
                 self._edit_int.setVisible(False)
             if 'float' in self.opts:
                 self._edit_float.setVisible(False)
-
 
     def getValue(self):
         '''
@@ -124,7 +118,6 @@ class MultiInput(QtGui.QWidget):
 
         raise ValueError
 
-
     def setDefault(self, info):
         '''
         Sets the default state of the widget.
@@ -142,9 +135,6 @@ class MultiInput(QtGui.QWidget):
             self._comb.setCurrentIndex(ind)
 
 
-#-----------------------------------------------------------------------------#
-
-
 # Material Shadow
 # -------- ------
 
@@ -155,6 +145,3 @@ class MaterialShadow(QtGui.QGraphicsDropShadowEffect):
         self.setColor(QtGui.QColor(color))
         self.setOffset(0, 3)
         self.setBlurRadius(10)
-
-
-#-----------------------------------------------------------------------------#
