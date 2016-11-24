@@ -87,17 +87,12 @@ class Engine(QtGui.QWidget):
             2. Sets position to the center of parent.
             3. Creates the first page to display.
         '''
-        sz = self.parent().size()
-        self.resize(sz)
-        cp = self.parent().frameGeometry().center()
-        qr = self.frameGeometry()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
-        
         self.stat = self.parent().parent().stat
         vbox = QtGui.QVBoxLayout()
         self.activePage = Start(self)
         vbox.addWidget(self.activePage)
+        self.setObjectName('Engine')
+        vbox.setMargin(0)
 
         return vbox
 
@@ -107,7 +102,6 @@ class Engine(QtGui.QWidget):
         Sets the layout of the Engine and displays the Engine.
         '''
         self.setLayout(self.layout)
-        self.show()
     
 
     def buttonClicked(self):

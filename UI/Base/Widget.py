@@ -40,12 +40,6 @@ class ExoBase(QtGui.QWidget):
             self.setLayout(self.createScroll(layout))
         else:
             self.setLayout(layout)
-        
-        sz = self.parent().size()
-        w = sz.width()
-        h = sz.height()
-        self.resize(w, h)
-        self.show()
     
     
     def vboxCreate(self, *objectlist, vbox=None):
@@ -165,16 +159,14 @@ class ExoBase(QtGui.QWidget):
             hbox.addWidget(self.nextButton)
             
         return hbox
-        
-        
+
+
     def paintEvent(self, event):
         """
         Draw Widget characteristics.
-        Features implemented so far:
-            1. Sets bg color to white.
         """
         opt = QtGui.QStyleOption()
-        opt.init(self)
+        opt.initFrom(self)
         p = QtGui.QPainter(self)
         s = self.style()
         s.drawPrimitive(QtGui.QStyle.PE_Widget, opt, p, self)

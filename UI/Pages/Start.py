@@ -48,17 +48,19 @@ class Start(ExoBase):
             2. Creates a QPushButton to load an existing Workspace.
         '''
         # Create Widgets.
-        self.createButton = QtGui.QPushButton('Create New Workspace')
-        self.loadButton = QtGui.QPushButton('Load Existing Workspace')
+        self.createButton = QtGui.QPushButton('Create a new Workspace.')
+        self.loadButton = QtGui.QPushButton('Load an existing Workspace.')
+        
         self.createButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.createButton.setObjectName('LabelStyle')
+
         self.loadButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.createButton.setGraphicsEffect(MaterialShadow(self))
-        self.loadButton.setGraphicsEffect(MaterialShadow(self))
+        self.loadButton.setObjectName('LabelStyle')
     
         # Create Logo
         logoImage = QtGui.QPixmap(path.join('Info', 'Images',
                 'logo.png'), 'PNG')
-        logoImage = logoImage.scaledToHeight(300,
+        logoImage = logoImage.scaledToHeight(200,
                 QtCore.Qt.SmoothTransformation)
         logo = Qt.QLabel()
         logo.setPixmap(logoImage)
@@ -66,20 +68,24 @@ class Start(ExoBase):
 
         # Create college logo
         clogoImage = QtGui.QPixmap(path.join('Info', 'Images',
-                'PESIT-small.png'), 'PNG')
-        clogoImage = clogoImage.scaledToHeight(175,
+                'pesit.png'), 'PNG')
+        clogoImage = clogoImage.scaledToHeight(125,
                 QtCore.Qt.SmoothTransformation)
         clogo = QtGui.QLabel()
         clogo.setPixmap(clogoImage)
 
-        vboxButton = self.vcenter(self.createButton, self.loadButton)
+        ques = QtGui.QLabel('What would you like to do?')
+        ques.setObjectName('QuesLabel')
+
+        vboxButton = self.vcenter(ques, 2, self.createButton, self.loadButton)
+        vboxButton.setSpacing(20)
         hboxButton = self.hcenter(vboxButton)
 
         vboxCLogo = QtGui.QVBoxLayout()
         vboxCLogo.addWidget(clogo)
         vboxCLogo.addStretch(4)
         vboxCLogo.setSpacing(0)
-        vboxCLogo.setMargin(0)
+        vboxCLogo.setMargin(20)
 
         vboxLogoBtn = QtGui.QVBoxLayout()
         vboxLogoBtn.addStretch(2)
@@ -91,9 +97,9 @@ class Start(ExoBase):
         vboxLogoBtn.setMargin(0)
 
         hbox = QtGui.QHBoxLayout()
+        hbox.addStretch(3)
+        hbox.addLayout(vboxLogoBtn, 2)
         hbox.addStretch(2)
-        hbox.addLayout(vboxLogoBtn)
-        hbox.addStretch(1)
         hbox.addLayout(vboxCLogo)
 
         return hbox

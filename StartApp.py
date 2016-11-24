@@ -7,8 +7,8 @@ import sys
 import os
 from datetime import date, datetime
 import logging
-from UI.ExoPlanet import ExoPlanet
 from PyQt4 import QtGui
+from UI.ExoPlanet import ExoPlanet
 
 
 #-----------------------------------------------------------------------------#
@@ -26,11 +26,11 @@ def startLogs():
     dt.reverse()
     dt[2] = dt[2].split('0')[1]
     dt = ''.join(dt)
-    
+
     logfile = '-'.join(('Exo', dt)) + '.log'
     logfile = os.path.join(logdir, logfile)
     logging.basicConfig(filename=logfile, format='%(levelname)s:%(message)s',
-        level=logging.DEBUG)
+            level=logging.DEBUG)
     tm = datetime.now().strftime('%H:%M:%S')
     logging.info('StartApp:Starting application at ' + tm)
 
@@ -55,6 +55,9 @@ def setDefaults(app):
     except Exception as err:
         logging.error('StartApp:Error in applying styles.')
         logging.error('StartApp:' + str(err))
+    
+    appFont = app.font()
+    appFont.setStyleStrategy(QtGui.QFont.PreferQuality)
 
 
 #-----------------------------------------------------------------------------#
@@ -72,7 +75,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()    
+    main()
 
 
 #-----------------------------------------------------------------------------#

@@ -39,10 +39,10 @@ class Chassis(QtGui.QTabWidget):
         self.setUsesScrollButtons(True)
         
         tBar = self.tabBar()
-        tBar.setShape(QtGui.QTabBar.TriangularNorth)
         tBar.setTabsClosable(True)
         tBar.tabCloseRequested[int].connect(self.closeTab)
         tBar.setFocusPolicy(QtCore.Qt.NoFocus)
+        tBar.setShape(QtGui.QTabBar.TriangularNorth)
 
 
     def newTab(self):
