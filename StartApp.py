@@ -11,8 +11,6 @@ from PyQt4 import QtGui
 from UI.ExoPlanet import ExoPlanet
 
 
-#-----------------------------------------------------------------------------#
-
 # Logging Init.
 # ======= ====
 
@@ -30,37 +28,30 @@ def startLogs():
     logfile = '-'.join(('Exo', dt)) + '.log'
     logfile = os.path.join(logdir, logfile)
     logging.basicConfig(filename=logfile, format='%(levelname)s:%(message)s',
-            level=logging.DEBUG)
+                        level=logging.DEBUG)
     tm = datetime.now().strftime('%H:%M:%S')
     logging.info('StartApp:Starting application at ' + tm)
 
 
-#-----------------------------------------------------------------------------#
-
 # Set Default Styles
 # === ======= ======
 
-
 def setDefaults(app):
+    rootpath = os.getcwd()
     style_file = os.path.join('Info', 'Styles', 'AppStyles.qss')
-    triangle = os.path.join('Info', 'Images', 'downarrow-blue.png')
-    tick = os.path.join('Info', 'Images', 'tick.png')
-    xmark = os.path.join('Info', 'Images', 'xmark.png')
 
     if os.path.isfile(style_file):
         with open(style_file) as stylePage:
             style = stylePage.read()
     try:
-        app.setStyleSheet(style % (triangle, xmark, tick))
+        app.setStyleSheet(style)
     except Exception as err:
         logging.error('StartApp:Error in applying styles.')
         logging.error('StartApp:' + str(err))
-    
+
     appFont = app.font()
     appFont.setStyleStrategy(QtGui.QFont.PreferQuality)
 
-
-#-----------------------------------------------------------------------------#
 
 # Main
 # ====
@@ -76,6 +67,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-#-----------------------------------------------------------------------------#

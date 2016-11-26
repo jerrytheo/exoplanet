@@ -9,8 +9,6 @@ from PyQt4 import QtGui, QtCore, Qt
 from ..Base import ExoBase, MaterialShadow
 
 
-#-----------------------------------------------------------------------------#
-
 # Start App UI
 # ===== === ==
 
@@ -22,63 +20,62 @@ class Start(ExoBase):
         1. Start a new Workspace.
         2. Load an existing Workspace.
     '''
-    
+
     def __init__(self, parent):
         super().__init__(parent)
-        layout = self.createLayout()
-        self.initUI(layout)
+        self.setupWidget()
+        self.makeConnections()
 
-    
-    def initUI(self, layout):
+    def makeConnections(self):
         '''
-        Initialise UI for the evaluations page.
-            1. Sets layout.
-            2. Connects the clicked signals for createButton and loadButton.
+        Connects the clicked signals for createButton and loadButton.
         '''
-        super().initUI(layout, scroll=False)
-        self.createButton.clicked.connect(self.parent().buttonClicked)
-        self.loadButton.clicked.connect(self.parent().buttonClicked)
-    
-    
-    def createLayout(self):
+        self.createButton.clicked.connect(self.parent().startEngine)
+        # self.loadButton.clicked.connect(self.parent().buttonClicked)
+
+    def setupWidget(self):
         '''
         Creates the layout of the Start page.
-            1. Creates a QPushButton to start a new Workspace.
-            2. Creates a QPushButton to load an existing Workspace.
         '''
         # Create Widgets.
-        self.createButton = QtGui.QPushButton('Create a new Workspace.')
-        self.loadButton = QtGui.QPushButton('Load an existing Workspace.')
-        
-        self.createButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.createButton.setObjectName('LabelStyle')
+        self.createButton = QtGui.QPushButton('Start a new Project.')
+        self.loadButton = QtGui.QPushButton('Pick up where I left off.')
 
+        self.createButton.setFocusPolicy(QtCore.Qt.NoFocus)
         self.loadButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.loadButton.setObjectName('LabelStyle')
-    
+
         # Create Logo
         logoImage = QtGui.QPixmap(path.join('Info', 'Images',
-                'logo.png'), 'PNG')
+                                            'logo.png'), 'PNG')
         logoImage = logoImage.scaledToHeight(200,
-                QtCore.Qt.SmoothTransformation)
+                                             QtCore.Qt.SmoothTransformation)
         logo = Qt.QLabel()
         logo.setPixmap(logoImage)
         logo.setGraphicsEffect(MaterialShadow(self))
 
         # Create college logo
         clogoImage = QtGui.QPixmap(path.join('Info', 'Images',
-                'pesit.png'), 'PNG')
+                                             'pesit.png'), 'PNG')
         clogoImage = clogoImage.scaledToHeight(125,
-                QtCore.Qt.SmoothTransformation)
+                                               QtCore.Qt.SmoothTransformation)
         clogo = QtGui.QLabel()
         clogo.setPixmap(clogoImage)
 
         ques = QtGui.QLabel('What would you like to do?')
         ques.setObjectName('QuesLabel')
 
-        vboxButton = self.vcenter(ques, 2, self.createButton, self.loadButton)
+        # Layout for the question and choices.
+        vboxButton = QtGui.QVBoxLayout()
+        vboxButton.addStretch(1)
+        vboxButton.addWidget(ques)
+        vboxButton.addStretch(2)
+        vboxButton.addWidget(self.createButton)
+        vboxButton.addWidget(self.loadButton)
         vboxButton.setSpacing(20)
-        hboxButton = self.hcenter(vboxButton)
+        hboxButton = QtGui.QHBoxLayout()
+        hboxButton.addStretch(1)
+        hboxButton.addLayout(vboxButton)
+        hboxButton.addStretch(1)
 
         vboxCLogo = QtGui.QVBoxLayout()
         vboxCLogo.addWidget(clogo)
@@ -101,7 +98,4 @@ class Start(ExoBase):
         hbox.addStretch(2)
         hbox.addLayout(vboxCLogo)
 
-        return hbox
-
-
-#-----------------------------------------------------------------------------#
+        self.setLayout(hbox)

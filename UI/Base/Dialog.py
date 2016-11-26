@@ -4,7 +4,7 @@
 
 
 from PyQt4 import QtGui, QtCore
-from .Widget import ExoBase
+from .ExoBase import ExoBase
 
 
 #-----------------------------------------------------------------------------#

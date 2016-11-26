@@ -3,6 +3,7 @@
 # =======
 
 import sys
+from os import path
 from PyQt4 import QtGui, QtCore
 
 
@@ -136,7 +137,7 @@ class MultiInput(QtGui.QWidget):
 
 
 # Material Shadow
-# -------- ------
+# ===============
 
 class MaterialShadow(QtGui.QGraphicsDropShadowEffect):
 
@@ -145,3 +146,95 @@ class MaterialShadow(QtGui.QGraphicsDropShadowEffect):
         self.setColor(QtGui.QColor(color))
         self.setOffset(0, 3)
         self.setBlurRadius(10)
+
+
+# Browse Files
+# ============
+
+class LoadFileWidget(QtGui.QWidget):
+
+    def __init__(self, parent, default=None):
+        super().__init__(parent)
+        fpath = path.expanduser('~') if default is None else default
+        self.createLayout(fpath)
+
+    def createLayout(self, fpath):
+        fpath = 'C:/Users/Jerry/Downloads/dbn/data/Complete/NewCustdata.csv'
+        self.ledit = QtGui.QLineEdit(fpath, self)
+        pbutn = QtGui.QPushButton('Browse', self)
+        pbutn.clicked.connect(self.loadFile)
+        layout = QtGui.QHBoxLayout()
+        layout.addWidget(self.ledit)
+        layout.addWidget(pbutn)
+        layout.setMargin(0)
+        layout.setSpacing(20)
+        self.setLayout(layout)
+
+    def loadFile(self):
+        fname = QtGui.QFileDialog.getOpenFileName(self, 'Select Data file.',
+                                                  self.ledit.text(),
+                                                  filter='CSV (*.csv) | *.csv')
+        if fname != '':
+            self.ledit.setText(fname)
+
+    def getFilePath(self):
+        fpath = self.ledit.text()
+        if path.isfile(fpath) and fpath.lower().endswith('.csv'):
+            return fpath
+        else:
+            return None
+
+    def setFilePath(self, fpath):
+        if path.isfile(fpath) or path.isdir(fpath):
+            self.ledit.setText(fpath)
+
+
+# Combo Box
+# =========
+
+class ComboBox(QtGui.QComboBox):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        lview = QtGui.QListView(self)
+        lview.setObjectName('ComboView')
+        self.setView(lview)
+        self.setStyle(QtGui.QStyleFactory.create("Polyester"))
+
+
+# Slider with Labels
+# ==================
+
+class Slider(QtGui.QWidget):
+
+    def __init__(self, parent, label1, label2):
+        super().__init__(parent)
+        self.setupLayout(label1, label2)
+        self.slider.valueChanged[int].connect(self.changeLabels)
+
+    def setupLayout(self, label1, label2):
+        self.val1 = QtGui.QLabel('70%', self)
+        self.val1.setObjectName('ComboValue')
+        self.val2 = QtGui.QLabel('30%', self)
+        self.val2.setObjectName('ComboValue')
+
+        self.label1 = QtGui.QLabel(label1, self)
+        self.label1.setObjectName('ComboLabel')
+        self.label2 = QtGui.QLabel(label2, self)
+        self.label2.setObjectName('ComboLabel')
+
+        self.slider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        self.slider.setRange(10, 90)
+        self.slider.setValue(70)
+
+        layout = QtGui.QHBoxLayout()
+        layout.addWidget(self.label1)
+        layout.addWidget(self.val1)
+        layout.addWidget(self.slider)
+        layout.addWidget(self.val2)
+        layout.addWidget(self.label2)
+        self.setLayout(layout)
+
+    def changeLabels(self, value):
+        self.val1.setText('{0}%'.format(value))
+        self.val2.setText('{0}%'.format(100 - value))

@@ -13,21 +13,17 @@ from .Chassis import Chassis
 from .Base import TextFileDialog
 
 
-#-----------------------------------------------------------------------------#
-
 # Application Main Window
 # =========== ==== ======
 
 
 class ExoPlanet(QtGui.QMainWindow):
 
-
     def __init__(self):
         super().__init__()
         self.workspace = {}
         self.addFonts()
         self.initUI()
-
 
     def initUI(self):
         self.stat = self.statusBar()
@@ -36,9 +32,8 @@ class ExoPlanet(QtGui.QMainWindow):
 
         self.setWindowTitle('ExoPlanet')
         self.setWindowIcon(QtGui.QIcon(os.path.join('Info', 'Images',
-            'appicon.ico')))
+                                                    'appicon.ico')))
         self.showMaximized()
-
 
     def createMenu(self):
         # Menus
@@ -73,7 +68,6 @@ class ExoPlanet(QtGui.QMainWindow):
         helpMenu.addAction(readmeView)
         helpMenu.addAction(licenseView)
 
-
     def addFonts(self):
         fontBaseDir = os.path.join('Info', 'Styles', 'fonts')
         fontdirs = os.listdir(fontBaseDir)
@@ -81,10 +75,10 @@ class ExoPlanet(QtGui.QMainWindow):
             fontdir = os.path.join(fontBaseDir, fontdir)
             fontfiles = os.listdir(fontdir)
             for fontfile in fontfiles:
-                if fontfile.split('.')[1] not in ('ttf', 'otf'): continue
+                if fontfile.split('.')[1] not in ('ttf', 'otf'):
+                    continue
                 fontpath = os.path.join(fontdir, fontfile)
                 QtGui.QFontDatabase.addApplicationFont(fontpath)
-
 
     def openReadme(self):
         readmefile = "README.txt"
@@ -93,6 +87,3 @@ class ExoPlanet(QtGui.QMainWindow):
     def openLicense(self):
         readmefile = "COPYING.txt"
         TextFileDialog(self, readmefile, "License")
-
-
-#-----------------------------------------------------------------------------#

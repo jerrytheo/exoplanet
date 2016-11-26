@@ -2,7 +2,6 @@
 # Imports
 # =======
 
-
 # Packages
 # --------
 import sys
@@ -15,7 +14,6 @@ from PyQt4 import QtGui, QtCore
 # ---
 from .Engine import Engine
 
-#-----------------------------------------------------------------------------#
 
 # Engine Support Widget
 # ====== ======= ======
@@ -37,26 +35,23 @@ class Chassis(QtGui.QTabWidget):
         Sets properties of the tab.
         '''
         self.setUsesScrollButtons(True)
-        
+
         tBar = self.tabBar()
         tBar.setTabsClosable(True)
         tBar.tabCloseRequested[int].connect(self.closeTab)
         tBar.setFocusPolicy(QtCore.Qt.NoFocus)
         tBar.setShape(QtGui.QTabBar.TriangularNorth)
 
-
     def newTab(self):
         '''
         Creates a new tab.
         '''
-        
         self.addTab(Engine(self), ' untitled ')
-    
+
     def closeTab(self, index=None):
         '''
         Closes a tab. If it's the last tab, creates a new tab in its place.
         '''
-
         if index is None:
             index = self.currentIndex()
         wd = self.widget(index)

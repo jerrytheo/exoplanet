@@ -1,4 +1,4 @@
-from .Canvas import ExoCanvas
-from .Misc   import MultiInput, MaterialShadow
-from .Widget import ExoBase
-from .Dialog import TextFileDialog
+from .Canvas import *
+from .Misc import *
+from .ExoBase import ExoBase
+from .Dialog import *
