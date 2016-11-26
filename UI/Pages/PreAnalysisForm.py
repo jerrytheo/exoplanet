@@ -6,7 +6,7 @@ import logging
 from os import path
 from json import load
 from PyQt4 import QtGui, QtCore
-from ..Base import ExoBase, LoadFileWidget, ComboBox, Slider
+from ..Base import ExoBase, LoadFileWidget, ComboBox, LabelledSlider
 from .ParameterForm import ParameterForm
 from Core import Data
 
@@ -35,7 +35,6 @@ class PreAnalysisForm(ExoBase):
         self.loadAlgorithms()
         self.setupWidgetLayout()
         self.setupConnections()
-        # self.initialiseState(defaultState)
 
     def loadAlgorithms(self):
         '''Loads the list of Algorithms available to select from.'''
@@ -64,20 +63,21 @@ class PreAnalysisForm(ExoBase):
         header2.setObjectName('Header')
         header2.setAlignment(QtCore.Qt.AlignHCenter)
 
-        form2 = QtGui.QVBoxLayout()
-        self.setupAParLayout(form2)
+        self.pform_layout = QtGui.QVBoxLayout()
+        self.setupAParLayout(self.pform_layout)
 
-        runBtn = QtGui.QPushButton('Analyse', self)
-        runBtn.setObjectName('RunButton')
+        self.runBtn = QtGui.QPushButton('Analyse', self)
+        self.runBtn.setVisible(False)
+        self.runBtn.setObjectName('RunButton')
 
         layout = QtGui.QVBoxLayout()
         layout.addWidget(header1, 1)
         layout.addLayout(form1, 4)
         layout.addSpacing(40)
         layout.addWidget(header2, 1)
-        layout.addLayout(form2, 4)
+        layout.addLayout(self.pform_layout, 4)
         layout.addSpacing(40)
-        layout.addLayout(self.createHBox(1, runBtn, 1))
+        layout.addLayout(self.createHBox(1, self.runBtn, 1))
         layout.setSpacing(20)
         layout.setMargin(40)
 
@@ -102,21 +102,24 @@ class PreAnalysisForm(ExoBase):
         loadLayout.setMargin(0)
         layout.addRow(loadLayout)
 
-        slabel = QtGui.QLabel('Size of partitions', self)
-        self.sslidr = Slider(self, 'Training Set', 'Testing Set')
-        self.sslidr.setDisabled(True)
-        layout.addRow(slabel, self.sslidr)
+        self.slabel = QtGui.QLabel('Size of partitions', self)
+        self.sslidr = LabelledSlider(self, 'Training Set', 'Testing Set')
+        self.slabel.setVisible(False)
+        self.sslidr.setVisible(False)
+        layout.addRow(self.slabel, self.sslidr)
 
-        hlabel = QtGui.QLabel('Headers present?', self)
+        self.hlabel = QtGui.QLabel('Headers present?', self)
         self.hchkbx = QtGui.QCheckBox(self)
-        self.hchkbx.setDisabled(True)
-        layout.addRow(hlabel, self.createHBox(self.hchkbx, 1))
+        self.hlabel.setVisible(False)
+        self.hchkbx.setVisible(False)
+        layout.addRow(self.hlabel, self.createHBox(self.hchkbx, 1))
 
-        llabel = QtGui.QLabel('Labels column', self)
+        self.llabel = QtGui.QLabel('Labels column', self)
         self.lcombo = ComboBox(self)
-        self.lcombo.setDisabled(True)
+        self.lcombo.setVisible(False)
+        self.llabel.setVisible(False)
         self.lcombo.addItem('Attribute 1')
-        layout.addRow(llabel, self.lcombo)
+        layout.addRow(self.llabel, self.lcombo)
 
     def setupAParLayout(self, layout):
         ltype = self.tcombo.currentText()
@@ -129,35 +132,49 @@ class PreAnalysisForm(ExoBase):
         self.acombo.currentIndexChanged[str].connect(self.changeAlgorithm)
         self.dloadf.clicked.connect(self.loadData)
         self.hchkbx.stateChanged[int].connect(self.headerSwitch)
+        self.runBtn.clicked.connect(self.parent().analyseData)
 
     def changeLType(self, ltype):
         self.acombo.clear()
         self.acombo.addItems(self.algorithms[ltype])
         if self.data is not None:
             if ltype == 'Clustering':
-                self.sslidr.setDisabled(True)
-                self.lcombo.setDisabled(True)
+                self.slabel.setVisible(False)
+                self.sslidr.setVisible(False)
+                self.llabel.setVisible(False)
+                self.lcombo.setVisible(False)
             else:
-                self.sslidr.setDisabled(False)
-                self.lcombo.setDisabled(False)
+                self.slabel.setVisible(True)
+                self.sslidr.setVisible(True)
+                self.llabel.setVisible(True)
+                self.lcombo.setVisible(True)
 
     def changeAlgorithm(self, algo):
         if not algo:
             return
+        ltype = self.tcombo.currentText()
+        self.pform.close()
+        del(self.pform)
+        self.pform = ParameterForm(self, algo, ltype)
+        self.pform_layout.addWidget(self.pform)
 
     def loadData(self):
         data_file = self.dbrwse.getFilePath()
         self.data = Data(data_file)
         if self.data.check() is False:
             self.parent().stat.showMessage('Data load failed.')
-        else:
-            self.hchkbx.setDisabled(False)
-            self.lcombo.clear()
-            self.lcombo.addItems(self.data.headers)
-            curLType = self.tcombo.currentText()
-            if not curLType == 'Clustering':
-                self.sslidr.setDisabled(False)
-                self.lcombo.setDisabled(False)
+            return
+        self.hlabel.setVisible(True)
+        self.hchkbx.setVisible(True)
+        self.runBtn.setVisible(True)
+        self.lcombo.clear()
+        self.lcombo.addItems(self.data.headers)
+        curLType = self.tcombo.currentText()
+        if not curLType == 'Clustering':
+            self.slabel.setVisible(True)
+            self.sslidr.setVisible(True)
+            self.llabel.setVisible(True)
+            self.lcombo.setVisible(True)
 
     def headerSwitch(self, state):
         if state == 2:
@@ -166,3 +183,18 @@ class PreAnalysisForm(ExoBase):
             self.data.disableHeaders()
         self.lcombo.clear()
         self.lcombo.addItems(self.data.headers)
+
+    def value(self):
+        ltype = self.tcombo.currentText()
+        if ltype == 'Clustering':
+            self.data.process(ltype)
+        else:
+            self.data.process(ltype,
+                              self.sslidr.value(),
+                              self.lcombo.currentIndex())
+        print(self.data.post_data)
+        model_info = {
+            'Learning Type': self.tcombo.currentText(),
+            'Algorithm': self.acombo.currentText(),
+            'Data': self.data,
+        }

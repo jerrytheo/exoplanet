@@ -38,9 +38,9 @@ class MultiInput(QtGui.QWidget):
                QLineEdit and sets a validator to ensure valid input.
         '''
         grid = QtGui.QGridLayout()
-        grid.setSpacing(0)
+        grid.setSpacing(10)
         grid.setMargin(0)
-        self._comb = QtGui.QComboBox(self)
+        self._comb = ComboBox(self)
         self._comb.addItems(self.opts)
         self._comb.currentIndexChanged[int].connect(self.changeUI)
         grid.addWidget(self._comb, 0, 0)
@@ -159,7 +159,7 @@ class LoadFileWidget(QtGui.QWidget):
         self.createLayout(fpath)
 
     def createLayout(self, fpath):
-        fpath = 'C:/Users/Jerry/Downloads/dbn/data/Complete/NewCustdata.csv'
+        fpath = 'C:/Users/Jerry/Projects/datasets/Datafiles/Iris/iris.csv'
         self.ledit = QtGui.QLineEdit(fpath, self)
         pbutn = QtGui.QPushButton('Browse', self)
         pbutn.clicked.connect(self.loadFile)
@@ -205,7 +205,7 @@ class ComboBox(QtGui.QComboBox):
 # Slider with Labels
 # ==================
 
-class Slider(QtGui.QWidget):
+class LabelledSlider(QtGui.QWidget):
 
     def __init__(self, parent, label1, label2):
         super().__init__(parent)
@@ -238,3 +238,6 @@ class Slider(QtGui.QWidget):
     def changeLabels(self, value):
         self.val1.setText('{0}%'.format(value))
         self.val2.setText('{0}%'.format(100 - value))
+
+    def value(self):
+        return self.slider.value()

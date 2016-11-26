@@ -26,6 +26,7 @@ class WorkspaceUI(ExoBase):
         layout = QtGui.QHBoxLayout()
 
         leftScroll = QtGui.QScrollArea(self)
+        leftScroll.setObjectName('LeftScroll')
         self.pre_form = PreAnalysisForm(self, defaultState)
         leftScroll.setWidget(self.pre_form)
         leftScroll.setWidgetResizable(True)
@@ -36,3 +37,6 @@ class WorkspaceUI(ExoBase):
         layout.addWidget(self.post_form, 1)
 
         self.setLayout(layout)
+
+    def analyseData(self):
+        model_info = self.pre_form.value()

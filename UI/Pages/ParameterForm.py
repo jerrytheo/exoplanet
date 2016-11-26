@@ -8,7 +8,7 @@ import json
 import logging
 from os import path
 from PyQt4 import QtGui, QtCore
-from ..Base import ExoBase, MultiInput
+from ..Base import ExoBase, MultiInput, ComboBox
 
 
 # Parameters UI
@@ -55,8 +55,8 @@ class ParameterForm(ExoBase):
                     for chk in info['conditions'][val]:
                         if not chk[1]:
                             lab, ele = self._elements[chk[0]]
-                            lab.setDisabled(True)
-                            ele.setDisabled(True)
+                            lab.setVisible(False)
+                            ele.setVisible(False)
                 elif info['type'] == 'int' or info['type'] == 'float':
                     x = self._elements[parameter][1].text()
                     if info['type'] == 'int':
@@ -68,8 +68,8 @@ class ParameterForm(ExoBase):
                             for parameter in info['conditions'][chk]:
                                 lab, ele = self._elements[parameter[0]]
                                 if not parameter[1]:
-                                    lab.setDisabled(True)
-                                    ele.setDisabled(True)
+                                    lab.setVisible(False)
+                                    ele.setVisible(False)
 
     def setupForm(self, algorithm, learning_type, default):
         '''
@@ -86,7 +86,7 @@ class ParameterForm(ExoBase):
         with open(fpath) as jfile:
             self._metadata = json.load(jfile)[learning_type][algorithm]
             if default is not None:
-                self.setDefaults(default, algorithm)      # Check.
+                self.setDefaults(default, algorithm)
         layout = self.createWidgetLayout()
         self.setLayout(layout)
 
@@ -175,7 +175,7 @@ class ParameterForm(ExoBase):
         '''
         Creates the widget to select a value from a list of values.
         '''
-        comb = QtGui.QComboBox()
+        comb = ComboBox()
         comb.addItems(info['opts'])
         comb.currentIndexChanged[int].connect(self.changeUI)
         try:
@@ -224,11 +224,11 @@ class ParameterForm(ExoBase):
             for chk in info['conditions'][val]:
                 lab, ele = elements[chk[0]]
                 if not chk[1]:
-                    lab.setDisabled(True)
-                    ele.setDisabled(True)
+                    lab.setVisible(False)
+                    ele.setVisible(False)
                 else:
-                    lab.setDisabled(False)
-                    ele.setDisabled(False)
+                    lab.setVisible(True)
+                    ele.setVisible(True)
 
         elif info['type'] == 'int' or info['type'] == 'float':
             x = self.sender().text()
@@ -238,11 +238,11 @@ class ParameterForm(ExoBase):
                     for para in info['conditions'][chk]:
                         lab, ele = elements[para[0]]
                         if not para[1]:
-                            lab.setDisabled(True)
-                            ele.setDisabled(True)
+                            lab.setVisible(False)
+                            ele.setVisible(False)
                         else:
-                            lab.setDisabled(False)
-                            ele.setDisabled(False)
+                            lab.setVisible(True)
+                            ele.setVisible(True)
 
     def getParameters(self):
         '''

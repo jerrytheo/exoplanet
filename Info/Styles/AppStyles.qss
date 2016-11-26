@@ -256,10 +256,12 @@ Start QPushButton:pressed {
 
 WorkspaceUI QLabel {
     font: bold 12pt "Roboto Slab";}
-
 WorkspaceUI QLabel#Header {
     font: bold 18pt "Montserrat";
     color: #282845;}
+WorkspaceUI QScrollArea#LeftScroll {
+    border-right: 2px solid #004000;
+    margin: 0;}
 
 /*
     Pre-Analysis Form
