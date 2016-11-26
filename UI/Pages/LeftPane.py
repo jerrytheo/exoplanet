@@ -2,11 +2,12 @@
 # Imports
 # =======
 
+import logging
 from os import path
 from json import load
 from PyQt4 import QtGui, QtCore
 from ..Base import ExoBase, LoadFileWidget, ComboBox, Slider
-import logging
+from .ParameterForm import ParameterForm
 from Core import Data
 
 
@@ -102,7 +103,10 @@ class LeftPane(ExoBase):
         layout.addRow(llabel, self.lcombo)
 
     def setupAParLayout(self, layout):
-        pass
+        ltype = self.tcombo.currentText()
+        algo = self.acombo.currentText()
+        self.pform = ParameterForm(self, algo, ltype)
+        layout.addWidget(self.pform)
 
     def setupConnections(self):
         self.tcombo.currentIndexChanged[str].connect(self.changeLType)
@@ -122,7 +126,9 @@ class LeftPane(ExoBase):
                 self.lcombo.setDisabled(False)
 
     def changeAlgorithm(self, algo):
-        print(algo)
+        del self.pform
+        ltype = self.tcombo.currentText()
+        self.pform = ParameterForm(self, algo, ltype)
 
     def loadData(self):
         data_file = self.dbrwse.getFilePath()

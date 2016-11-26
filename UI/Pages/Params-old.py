@@ -11,35 +11,32 @@ from PyQt4 import QtGui, QtCore
 from ..Base import ExoBase, MultiInput, MaterialShadow
 
 
-#-----------------------------------------------------------------------------#
-
 # Parameters UI
 # ========== ==
 
-
-class Params(ExoBase):
+class ParameterForm(ExoBase):
 
     '''
     Page used to set the parameters of the selected algorithm.
     Generated from the parameter details stored in JSON files.
     '''
 
-    def __init__(self, parent, algo, algotype, params=None):
+    def __init__(self, parent, algorithm, learning_type, params=None):
         self.inputs = {
-            'int'   : self.intInput,
-            'float' : self.floatInput,
-            'combo' : self.comboInput,
-            'multi' : self.multiInput
+            'int': self.intInput,
+            'float': self.floatInput,
+            'combo': self.comboInput,
+            'multi': self.multiInput
         }
         super().__init__(parent)
         self._elements = {}
         self._defaults = {}
         self._param_details = {}
-        layout = self.createLayout(algo, algotype, params)
-        self.initUI(layout)
 
-    
-    def initUI(self, layout):
+        self.setupForm(algorithm_type, algorithm, params)
+        self.initiateDefaultState()
+
+    def makeConnections(self, layout):
         '''
         Initialise the AlgoFile page.
             1. Sets layout for AlgoFile.
@@ -47,53 +44,43 @@ class Params(ExoBase):
             3. Checks the conditions criteria for each parameter and disables
                the corresponding widgets.
         '''
-        
         super().initUI(layout)
-        
-        startShortcut1 = QtGui.QShortcut(QtGui.QKeySequence(
-            QtCore.Qt.Key_Enter), self)
-        startShortcut1.activated.connect(self.startButton.click)
-        startShortcut2 = QtGui.QShortcut(QtGui.QKeySequence(
-            QtCore.Qt.Key_Return), self)
-        startShortcut2.activated.connect(self.startButton.click)
-        
-        self.startButton.clicked.connect(self.parent().buttonClicked)
-        self.backButton.clicked.connect(self.parent().goBack)
-        
         for algo in self._param_details:
             elements = self._elements[algo]
-            
+
             for para in elements:
                 info = self._param_details[algo][para]
-                if not isinstance(info, dict): continue
-                
+                if not isinstance(info, dict):
+                    continue
+
                 if 'conditions' in info:
                     if info['type'] == 'combo':
                         index = elements[para][1].currentIndex()
                         val = info['opts'][index]
-                        
+
                         for chk in info['conditions'][val]:
                             if not chk[1]:
                                 lab, ele = elements[chk[0]]
                                 lab.setVisible(False)
                                 ele.setVisible(False)
-                    
+
                     elif info['type'] == 'int' or info['type'] == 'float':
                         x = elements[para][1].text()
-                        
-                        if info['type'] == 'int': x = int(x)
-                        else: round(float(x), 6)
-                        
+
+                        if info['type'] == 'int':
+                            x = int(x)
+                        else:
+                            round(float(x), 6)
+
                         for chk in info['conditions']:
-                            
+
                             if eval(chk):
-                                
+
                                 for para in info['conditions'][chk]:
                                     lab, ele = elements[para[0]]
                                     if not para[1]:
                                         lab.setVisible(False)
                                         ele.setVisible(False)
-
 
     def createLayout(self, algo, algotype, params):
         '''
@@ -105,23 +92,7 @@ class Params(ExoBase):
             3. Build the layout for the parameters using createAlgoLayout.
         2. Creates a start button to initialise training.
         '''
-
-        files = {
-            'Classification' : 'classparams.json',
-            'Regression'     : 'regrparams.json',
-            'Clustering'     : 'clusparams.json',
-            'Pre-Processing' : 'preparams.json',
-        }
-
         # Labels, Back button
-        self.startButton = QtGui.QPushButton('Start')
-        self.startButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.startButton.setGraphicsEffect(MaterialShadow(self))
-        hboxBtm = self.iterBtns(next=False)
-        hboxStart = self.hcenter(self.startButton)
-        
-        cards = []
-
         # Create individual layouts
         for i, val in enumerate(algo):
             fname = files[algotype[i]]
@@ -132,7 +103,6 @@ class Params(ExoBase):
                 self._param_details[val] = param_details
                 if params is not None:
                     self.setDefaults(params[val], val)
-        
 
             layout = self.createAlgoLayout(val)
             cards.append(self.createCard(val, layout))

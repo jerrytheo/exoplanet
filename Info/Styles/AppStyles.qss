@@ -160,17 +160,12 @@ QLabel#ComboValue {
 /* Check Box
    --------- */
 QCheckBox {
-    color: #FFFFFF;
-    background-color: #282845;
-    border-radius: 3px;}
+    background-color: #FAFAF0;
+    border: 1px solid #282845;}
 QCheckBox::hover {
-    background-color: #282856;}
-QCheckBox:pressed {
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                            stop: 0 #282845,
-                            stop: 1.0 #4A4A67);}
+    border: 1px solid #004000;}
 QCheckBox::indicator {
-    padding: 2px 1px 2px 1px;}
+    padding: 2px 1px 2px 6px;}
 QCheckBox::indicator:unchecked {
     image: url(Info/Images/xmark.png);
     width: 17px;

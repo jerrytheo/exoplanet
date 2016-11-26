@@ -4,7 +4,6 @@
 
 import sys
 from PyQt4 import QtGui, QtCore
-from .Misc import MaterialShadow
 
 
 # Base Widget
@@ -14,12 +13,9 @@ class ExoBase(QtGui.QWidget):
 
     """
     Common functions for Widgets defined here.
-    initUI      -- Initiate UI.
-    vcenter     -- Return QVBoxLayout object with listed objects centralised.
-    hcenter     -- Return QHBoxLayout object with listed objects centralised.
+    createVBox  -- Return QVBoxLayout object with listed objects.
+    createHBox  -- Return QHBoxLayout object with listed objects.
     paintEvent  -- Draw Widget characteristics.
-    iterBtns    -- Returns QHBoxLayout object with Next and Back buttons.
-    placecenter -- Place Widget at the center of screen or parent window.
     """
 
     def __init__(self, parent):
