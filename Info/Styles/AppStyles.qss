@@ -7,8 +7,8 @@
 * {
     font: 11pt "Work Sans";
     color: #2F2F2F;}
-*:!enabled {
-    opacity: 10;}
+*:disabled {
+    opacity: 0.5;}
 QWidget {
     background-color: #E7F2ED;
     border: none;}
@@ -64,6 +64,58 @@ QTabBar::tab:!selected {
     border-right: 1px solid #004000;}
 QTabBar::tab:first:!selected {
     border-left: 1px solid #004000;}
+
+/* Scroll Bar
+   ---------- */
+QScrollBar:vertical {
+    background: transparent;
+    width: 5px;
+    margin: 2px 0 2px 0;}
+QScrollBar::handle:vertical {
+    background: #606060;
+    min-height: 25px;
+    border-radius: 2px;}
+QScrollBar::add-line:vertical {
+    background: transparent;
+    height: 1px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;}
+QScrollBar::sub-line:vertical {
+    background: transparent;
+    height: 1px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;}
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    width: 1px;
+    height: 1px;
+    background: none;}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;}
+QScrollBar:horizontal {
+    background: transparent;
+    height: 5px;
+    margin: 0px 2px 0 2px;}
+QScrollBar::handle:horizontal {
+    background: #606060;
+    border-radius: 2px;
+    min-width: 25px;}
+QScrollBar::add-line:horizontal {
+    background: transparent;
+    width: 1px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;}
+    QScrollBar::sub-line:horizontal {
+    background: transparent;
+    width: 1px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;}
+    QScrollBar:left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
+    width: 1px;
+    height: 1px;
+    background: none;}
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;}
+
 
 /* Push Button
    ----------- */
@@ -208,3 +260,13 @@ WorkspaceUI QLabel {
 WorkspaceUI QLabel#Header {
     font: bold 18pt "Montserrat";
     color: #282845;}
+
+/*
+    Pre-Analysis Form
+    =================
+*/
+
+PreAnalysisForm QPushButton#RunButton{
+    padding: 10px 20px;
+    font: bold 13pt "Montserrat";
+    border-width: 2px;}

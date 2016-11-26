@@ -5,7 +5,7 @@
 
 import sys
 from ..Base import ExoBase
-from .LeftPane import LeftPane
+from .PreAnalysisForm import PreAnalysisForm
 from PyQt4 import QtGui, QtCore
 
 
@@ -24,9 +24,15 @@ class WorkspaceUI(ExoBase):
         Create the layout for the Workspace.
         '''
         layout = QtGui.QHBoxLayout()
-        layout.addWidget(LeftPane(self, defaultState), 1)
 
-        # Temporary
-        layout.addWidget(QtGui.QLabel('Right Pane', self), 1)
+        leftScroll = QtGui.QScrollArea(self)
+        self.pre_form = PreAnalysisForm(self, defaultState)
+        leftScroll.setWidget(self.pre_form)
+        leftScroll.setWidgetResizable(True)
+        layout.addWidget(leftScroll, 1)
+
+        self.post_form = QtGui.QLabel('Post Form')
+        self.post_form.setAlignment(QtCore.Qt.AlignCenter)
+        layout.addWidget(self.post_form, 1)
 
         self.setLayout(layout)

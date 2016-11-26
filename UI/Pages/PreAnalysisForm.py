@@ -20,7 +20,7 @@ learning_types = ('Classification', 'Clustering', 'Regression')
 # Pre Analysis Widget
 # ===================
 
-class LeftPane(ExoBase):
+class PreAnalysisForm(ExoBase):
 
     '''
     Displays a form for specifying:
@@ -50,21 +50,37 @@ class LeftPane(ExoBase):
 
     def setupWidgetLayout(self):
         '''Creates a layout for the widget.'''
-        header = QtGui.QLabel('Set Input Values')
-        header.setObjectName('Header')
-        header.setAlignment(QtCore.Qt.AlignHCenter)
+        header1 = QtGui.QLabel('Algorithm and Data')
+        header1.setObjectName('Header')
+        header1.setAlignment(QtCore.Qt.AlignHCenter)
 
-        form = QtGui.QFormLayout()
-        self.setupAlgoLayout(form)
-        self.setupDataLayout(form)
-        self.setupAParLayout(form)
-        form.setVerticalSpacing(20)
-        form.setLabelAlignment(QtCore.Qt.AlignRight)
+        form1 = QtGui.QFormLayout()
+        self.setupAlgoLayout(form1)
+        self.setupDataLayout(form1)
+        form1.setVerticalSpacing(20)
+        form1.setLabelAlignment(QtCore.Qt.AlignRight)
+
+        header2 = QtGui.QLabel('Algorithm Parameters')
+        header2.setObjectName('Header')
+        header2.setAlignment(QtCore.Qt.AlignHCenter)
+
+        form2 = QtGui.QVBoxLayout()
+        self.setupAParLayout(form2)
+
+        runBtn = QtGui.QPushButton('Analyse', self)
+        runBtn.setObjectName('RunButton')
 
         layout = QtGui.QVBoxLayout()
-        layout.addWidget(header, 1)
-        layout.addLayout(form, 4)
+        layout.addWidget(header1, 1)
+        layout.addLayout(form1, 4)
+        layout.addSpacing(40)
+        layout.addWidget(header2, 1)
+        layout.addLayout(form2, 4)
+        layout.addSpacing(40)
+        layout.addLayout(self.createHBox(1, runBtn, 1))
         layout.setSpacing(20)
+        layout.setMargin(40)
+
         self.setLayout(layout)
 
     def setupAlgoLayout(self, layout):
@@ -126,9 +142,8 @@ class LeftPane(ExoBase):
                 self.lcombo.setDisabled(False)
 
     def changeAlgorithm(self, algo):
-        del self.pform
-        ltype = self.tcombo.currentText()
-        self.pform = ParameterForm(self, algo, ltype)
+        if not algo:
+            return
 
     def loadData(self):
         data_file = self.dbrwse.getFilePath()
