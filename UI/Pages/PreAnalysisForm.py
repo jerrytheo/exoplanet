@@ -161,6 +161,7 @@ class PreAnalysisForm(ExoBase):
     def loadData(self):
         data_file = self.dbrwse.getFilePath()
         self.data = Data(data_file)
+        self.hchkbx.setCheckState(QtCore.Qt.Unchecked)
         if self.data.check() is False:
             self.parent().stat.showMessage('Data load failed.')
             return
@@ -192,9 +193,10 @@ class PreAnalysisForm(ExoBase):
             self.data.process(ltype,
                               self.sslidr.value(),
                               self.lcombo.currentIndex())
-        print(self.data.post_data)
         model_info = {
             'Learning Type': self.tcombo.currentText(),
             'Algorithm': self.acombo.currentText(),
             'Data': self.data,
+            'Parameters': self.pform.getParameters()
         }
+        return model_info

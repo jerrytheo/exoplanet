@@ -2,10 +2,12 @@
 # Imports
 # =======
 
-import numpy as np
-from random import shuffle
 import csv
 import logging
+import numpy as np
+from os import path
+from random import shuffle
+from copy import deepcopy
 
 
 # Data Class
@@ -15,6 +17,8 @@ class Data:
 
     def __init__(self, data_filepath):
         self._filepath = data_filepath
+        self.filedir = path.split(self._filepath)[0]
+        self.filename = path.split(self._filepath)[1]
         self._pre_data = []
         self._headers_present = False
         try:
@@ -47,14 +51,15 @@ class Data:
             self._headers_present = False
 
     def process(self, ltype, set_sizes=None, label_col=None):
-        shuffle(self._pre_data)
+        data = deepcopy(self._pre_data)
+        shuffle(data)
         self._ltype = ltype
         if ltype == 'Clustering':
-            self.post_data = self.convert()
+            self.post_data = self.convert(data)
         else:
             set_sizes = round(self.size[0] * (set_sizes / 100))
-            labels, label_names = self.extractLabels(label_col, ltype)
-            data = self.convert()
+            labels, label_names = self.extractLabels(data, label_col, ltype)
+            data = self.convert(data)
 
             class DataSet:
                 data = None
@@ -74,29 +79,29 @@ class Data:
             if ltype == 'Classification':
                 self.post_data['Labels'] = label_names
 
-    def convert(self):
+    def convert(self, data):
         '''
         Converts the data read from the file to a numpy array of type float64.
         Converts categorial data into integral data.
         '''
         temp = []
-        for row in range(0, len(self._pre_data)):
-            for val in range(0, len(self._pre_data[row])):
+        for row in range(0, len(data)):
+            for val in range(0, len(data[row])):
                 try:
-                    self._pre_data[row][val] = float(self._pre_data[row][val])
+                    data[row][val] = float(data[row][val])
                 except ValueError as err:
-                    if self._pre_data[row][val] not in temp:
-                        temp.append(self._pre_data[row][val])
-                    self._pre_data[row][val] = temp.index(
-                                                    self._pre_data[row][val])
-        return np.array(self._pre_data)
+                    if data[row][val] not in temp:
+                        temp.append(data[row][val])
+                    data[row][val] = temp.index(
+                                                    data[row][val])
+        return np.array(data)
 
-    def extractLabels(self, label_col, ltype):
+    def extractLabels(self, data, label_col, ltype):
         labels = []
-        for row_num, row in enumerate(self._pre_data):
+        for row_num, row in enumerate(data):
             labels.append(row[label_col])
             row = [val for i, val in enumerate(row) if i != label_col]
-            self._pre_data[row_num] = row
+            data[row_num] = row
 
         if ltype == 'Classification':
             uniq_labels = list(set(labels))

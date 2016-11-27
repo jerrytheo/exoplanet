@@ -124,8 +124,8 @@ QPushButton {
     color: #282845;
     border: 1px solid #282845;
     border-top-left-radius: 3px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
     border-bottom-right-radius: 3px;
     padding: 5px 10px 5px 10px;}
 QPushButton::hover {
@@ -227,6 +227,41 @@ QCheckBox::indicator:checked {
     width: 17px;
     height: 17px;}
 
+/* Dialog Box
+   ---------- */
+QDialog {
+    padding: 10px 20px;
+    background: #FAFAF0;}
+QDialog QCheckBox {
+    border-radius: 3px;}
+
+/* Table Widget
+   ------------ */
+QTableView {
+    gridline-color: #282845;
+    border-top: 1px solid #282845;
+    border-left: 1px solid #282845;}
+QTableWidget QLabel#InfoLabel {
+    color: #3D3D3D;
+    font-size: 10pt;
+    font-weight: normal;
+    background-color: #FAFAF0;
+    padding: 8px 8px 8px 8px;}
+QTableWidget QLabel#SubLabel {
+    font-size: 11pt;
+    font-weight: bold;
+    padding: 3px 3px 3px 3px;
+    background: #FAFAF0;
+    color: #2F2F2F;}
+QTableWidget QLabel#BlankLabel {
+    background-color: #FAFAF0;   }
+QTableWidget QLabel#MainLabel {
+    color: #282845;
+    font-size: 11pt;
+    font-weight: bold;
+    background: #FAFAF0;
+    padding: 3px 3px 3px 3px;}
+
 /*
     Start Styles
     ============
@@ -239,7 +274,7 @@ Start QPushButton {
     font-size: 13pt;
     border-radius: 4px;
     border: none;
-    padding: 5px 0 5px 0;}
+    padding: 8px;}
 Start QPushButton:hover {
     background-color: #282845;
     color: #FAFAF0;}
@@ -262,13 +297,21 @@ WorkspaceUI QLabel#Header {
 WorkspaceUI QScrollArea#LeftScroll {
     border-right: 2px solid #004000;
     margin: 0;}
-
-/*
-    Pre-Analysis Form
-    =================
-*/
-
-PreAnalysisForm QPushButton#RunButton{
+WorkspaceUI QLabel#Placeholder {
+    font: bold 18pt "Montserrat";
+    color: #282845;
+    background: #FAFAF0;}
+WorkspaceUI QLabel#Info {
+    font: normal 11pt "Work Sans";}
+WorkspaceUI QPushButton#Predict {
+    padding: 8px 12px;
+    font-size: 12pt;}
+WorkspaceUI QPushButton#Visuals {
+    border: none;
+    border-radius: 4px;
+    font-size: 13pt;
+    padding: 8px 12px;}
+WorkspaceUI QPushButton#RunButton{
     padding: 10px 20px;
     font: bold 13pt "Montserrat";
     border-width: 2px;}
