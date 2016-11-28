@@ -336,3 +336,13 @@ WorkspaceUI QPushButton#RunButton{
     padding: 10px 20px;
     font: bold 13pt "Montserrat";
     border-width: 2px;}
+
+/*
+    License
+    =======
+*/
+QPlainTextEdit {
+    border: 1px solid #000000;
+    background: #FFFFFF;
+    color: #2F2F2F;
+    font: normal 11pt "Cutive Mono";}

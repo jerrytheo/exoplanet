@@ -35,7 +35,6 @@ class LicenseDialog(QtGui.QDialog):
         self.setupDialogLayout(fpath)
 
     def setupDialogLayout(self, fpath):
-        title = QtGui.QLabel('License', self)
         try:
             with open(fpath) as txtfile:
                 text = txtfile.read()
@@ -50,7 +49,10 @@ class LicenseDialog(QtGui.QDialog):
 
         scr = QtGui.QScrollArea()
         scr.setWidget(textbox)
-        scr.setWidgetResizable(False)
+        scr.setWidgetResizable(True)
+        scr.setMinimumWidth(textbox.width())
+        scr.setMinimumHeight(500)
         vbox = QtGui.QVBoxLayout()
-        vbox.addWidget(title)
         vbox.addWidget(scr)
+
+        self.setLayout(vbox)
