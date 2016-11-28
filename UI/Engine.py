@@ -60,12 +60,8 @@ class Engine(ExoBase):
         self.activePage.setObjectName('ActivePage')
         self.layout.addWidget(self.activePage)
 
-    def paintEvent(self, event):
-        """
-        Draw Widget characteristics.
-        """
-        opt = QtGui.QStyleOption()
-        opt.initFrom(self)
-        p = QtGui.QPainter(self)
-        s = self.style()
-        s.drawPrimitive(QtGui.QStyle.PE_Widget, opt, p, self)
+    def save(self):
+        if isinstance(self.activePage, Start):
+            self.stat.setText('You can\'t save here.')
+            return
+        fpath = QtGui.QFileDialog(self)

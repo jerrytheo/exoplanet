@@ -28,37 +28,66 @@ class ExoPlanet(QtGui.QMainWindow):
     def initUI(self):
         self.stat = self.statusBar()
         self.setCentralWidget(Chassis(self))
-        self.createMenu()
+        self.createMenus()
 
         self.setWindowTitle('ExoPlanet')
         self.setWindowIcon(QtGui.QIcon(os.path.join('Info', 'Images',
                                                     'appicon.ico')))
         self.showMaximized()
 
-    def createMenu(self):
+    def createMenus(self):
         # Menus
         self.menu = self.menuBar()
-        fileMenu = self.menu.addMenu('File')
-        helpMenu = self.menu.addMenu('Help')
+        self.createFileMenu()
+        self.createHelpMenu()
 
-        # Actions.
+    def createFileMenu(self):
+        fileMenu = self.menu.addMenu('File')
+        centralWid = self.centralWidget()
+
+        # New Tab
+        newAct = QtGui.QAction('New Tab', self)
+        newAct.setShortcut('Ctrl+N')
+        newAct.triggered.connect(centralWid.newTab)
+
+        # Close Tab
+        closeAct = QtGui.QAction('Close Tab', self)
+        closeAct.setShortcut('Ctrl+X')
+        closeAct.triggered.connect(centralWid.closeTab)
+
+        # Save
+        saveAct = QtGui.QAction('Save', self)
+        saveAct.setShortcut('Ctrl+S')
+        #saveAct.triggered.connect(centralWid.currentWidget().save(new=False))
+
+        # Save As
+        saveasAct = QtGui.QAction('Save As', self)
+        saveasAct.setShortcut('Ctrl+Shift+S')
+        #saveasAct.triggered.connect(centralWid.currentWidget().save(new=True))
+
+        # Open
+        openAct = QtGui.QAction('Open', self)
+        openAct.setShortcut('Ctrl+O')
+        #openAct.triggered.connect(centralWid.currentWidget().load())
+
         # Quit
         quitAct = QtGui.QAction('Quit', self)
         quitAct.setShortcut('Ctrl+Q')
         quitAct.triggered.connect(QtGui.QApplication.quit)
-        # New Tab
-        newAct = QtGui.QAction('New Tab', self)
-        newAct.setShortcut('Ctrl+N')
-        newAct.triggered.connect(self.centralWidget().newTab)
-        # Close Tab
-        closeAct = QtGui.QAction('Close Tab', self)
-        closeAct.setShortcut('Ctrl+X')
-        closeAct.triggered.connect(self.centralWidget().closeTab)
 
         fileMenu.addAction(newAct)
+        fileMenu.addSeparator()
+        fileMenu.addAction(saveAct)
+        fileMenu.addAction(saveasAct)
+        fileMenu.addSeparator()
+        fileMenu.addAction(openAct)
+        fileMenu.addSeparator()
         fileMenu.addAction(closeAct)
+        fileMenu.addSeparator()
         fileMenu.addAction(quitAct)
 
+    def createHelpMenu(self):
+        helpMenu = self.menu.addMenu('Help')
         # Help Menu
         readmeView = QtGui.QAction('View Readme', self)
         readmeView.triggered.connect(self.openReadme)

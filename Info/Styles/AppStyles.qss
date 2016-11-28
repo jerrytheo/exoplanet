@@ -24,7 +24,14 @@ QMenuBar {
 QMenuBar::item:!selected {
     background: transparent;}
 QMenu {
-    font-size: 10pt;}
+    font: normal 9pt "Catamaran";
+    padding-top: 5px;
+    background: #FAFAF0;}
+QMenu::item {
+    padding: 3px 15px 3px 30px;
+    background: transparent;}
+QMenu::item:selected {
+    background: #E7F2ED;}
 
 /* Tab Bar
    ------- */
