@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from importlib import import_module
 import json
-import logging
 
 
 # Required Information
@@ -87,33 +86,17 @@ class Model:
     """
 
     def __init__(self, algorithm, params):
-        try:
-            self.model = _importsklearnAPI(algorithm)(**params)
-        except ImportError as err:
-            logging.error('ModelBuild:' + str(err))
-            logging.error('ModelBuild:Package import failed.')
-        else:
-            logging.info('ModelBuild:Import successful.')
+        self.model = _importsklearnAPI(algorithm)(**params)
 
     def fitData(self, data, labels=None):
-        try:
-            if labels is None:
-                self.model.fit(data)
-            else:
-                self.model.fit(data, labels)
-        except Exception as err:
-            logging.error('ModelBuild:Error in training')
-            logging.error('ModelBuild:' + str(err))
+        if labels is None:
+            self.model.fit(data)
         else:
-            logging.info('ModelBuild:Model fit successful.')
+            self.model.fit(data, labels)
 
     def predictData(self, data):
-        y_pred = None
         try:
             y_pred = self.model.predict(data)
         except Exception as err:
-            logging.error('ModelBuild:Error in predicting')
-            logging.error('ModelBuild:' + str(err))
-        else:
-            logging.info('ModelBuild:Prediction Successful')
+            y_pred = None
         return y_pred

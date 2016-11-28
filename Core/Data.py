@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # =======
 
 import csv
-import logging
 import numpy as np
 from os import path
 from random import shuffle
@@ -58,8 +57,6 @@ class Data:
             self.headers = ['Attribute {0}'.format(i+1) for i in range(cols)]
         except Exception as err:
             self._pre_data = None
-            logging.error('Data:Upload Failed')
-            logging.error('Data:' + str(err))
         else:
             data_file.close()
 
