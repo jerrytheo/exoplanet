@@ -4,9 +4,8 @@
 
 
 from os import path
-import sys
 from PyQt4 import QtGui, QtCore, Qt
-from ..Base import ExoBase, MaterialShadow
+from ..Base import ExoBase
 
 
 # Start App UI
@@ -51,7 +50,11 @@ class Start(ExoBase):
                                              QtCore.Qt.SmoothTransformation)
         logo = Qt.QLabel()
         logo.setPixmap(logoImage)
-        logo.setGraphicsEffect(MaterialShadow(self))
+        shadow = QtGui.QGraphicsDropShadowEffect(self)
+        shadow.setColor(QtGui.QColor(color))
+        shadow.setOffset(0, 3)
+        shadow.setBlurRadius(10)
+        logo.setGraphicsEffect(shadow)
 
         # Create college logo
         clogoImage = QtGui.QPixmap(path.join('Info', 'Images',

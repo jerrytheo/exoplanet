@@ -2,7 +2,6 @@
 # Imports
 # =======
 
-import sys
 from os import path
 from PyQt4 import QtGui, QtCore
 
@@ -134,18 +133,6 @@ class MultiInput(QtGui.QWidget):
         elif isinstance(info['default'], str):
             ind = self.opts.index(info['default'])
             self._comb.setCurrentIndex(ind)
-
-
-# Material Shadow
-# ===============
-
-class MaterialShadow(QtGui.QGraphicsDropShadowEffect):
-
-    def __init__(self, parent, color='#ACACAC'):
-        super().__init__(parent)
-        self.setColor(QtGui.QColor(color))
-        self.setOffset(0, 3)
-        self.setBlurRadius(10)
 
 
 # Browse Files

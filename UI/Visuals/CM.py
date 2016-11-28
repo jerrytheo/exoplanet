@@ -3,7 +3,6 @@
 # =======
 
 import csv
-import logging
 from os import path
 from sklearn.metrics import confusion_matrix
 from ..Base import ExoCanvas
@@ -28,7 +27,6 @@ class ConfusionMatrix(QtGui.QDialog):
         try:
             C = confusion_matrix(y_true, y_pred)
         except Exception as err:
-            logging.error('Evaluation:Confusion Matrix:' + str(err))
             C = None
         return C
 
@@ -51,7 +49,6 @@ class ConfusionMatrix(QtGui.QDialog):
                                                        home)
         self.confMat.save(dname)
         self.parent().parent().stat.showMessage('Confusion Matrix saved')
-        logging.info('ClassVis:Confusion Matrix saved')
 
 
 # Confusion Matrix Widget
@@ -234,7 +231,7 @@ class CMatrix(QtGui.QWidget):
     def getP(self, n):
         P = []
         for i in range(n):
-            P.append(sum(self.matrix[i,]))
+            P.append(sum(self.matrix[i, ]))
         return P
 
     def getN(self, n):
@@ -243,7 +240,7 @@ class CMatrix(QtGui.QWidget):
             sm = 0
             for j in range(n):
                 if (j != i):
-                    sm += sum(self.matrix[j,])
+                    sm += sum(self.matrix[j, ])
             N.append(sm)
         return N
 

@@ -3,7 +3,6 @@
 # =======
 
 
-import logging
 import numpy as np
 from os import path
 from math import ceil
@@ -95,14 +94,12 @@ class PCoPlot(QtGui.QDialog):
                                                        home)
         self.pcoCanvas.save(dname)
         self.parent().parent().stat.showMessage('Visuals Saved')
-        logging.info('ClusVis:Visuals Saved')
 
     def rePlot(self, state):
         sender = self.sender()
         if sender is self.scaleCombo:
             if state == 0:
                 X, y = self.pcoPlot
-                logging.info('ClusVis:Changed scaling to None')
             else:
                 X, y = self.scaleFeatures(state)
             self.pcoCanvas.createPlot(X, y, self._headers)
@@ -117,10 +114,8 @@ class PCoPlot(QtGui.QDialog):
             ind = self.chkList.index(sender)
             if state == 0:
                 line_state = 'off'
-                logging.info('ClusVis:Line' + str(ind) + ' turned off.')
             else:
                 line_state = 'on'
-                logging.info('ClusVis:Line' + str(ind) + ' turned on.')
             self.pcoCanvas.updatePlot(ind, line_state)
 
     def scaleFeatures(self, type):
@@ -128,13 +123,11 @@ class PCoPlot(QtGui.QDialog):
         y = self.pcoPlot[1]
         n_samp, n_feat = X.shape
         if type == 1:
-            logging.info('ClusVis:Changed scaling to Rescale')
             for i in range(n_feat):
                 mx = max(X[:, i])
                 mn = min(X[:, i])
                 X[:, i] = (X[:, i] - mn)/(mx - mn)
         elif type == 2:
-            logging.info('ClusVis:Changed scaling to Normalize')
             mu = np.mean(X, 0)
             sd = np.std(X, 0)
             for i in range(n_feat):

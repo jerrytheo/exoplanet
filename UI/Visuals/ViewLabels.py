@@ -2,8 +2,6 @@
 # Imports
 # =======
 
-import logging
-import numpy as np
 from os import path
 from PyQt4 import QtGui, QtCore
 

@@ -2,10 +2,7 @@
 # Imports
 # =======
 
-
-import sys
 import json
-import logging
 from os import path
 from PyQt4 import QtGui, QtCore
 from ..Base import ExoBase, MultiInput, ComboBox

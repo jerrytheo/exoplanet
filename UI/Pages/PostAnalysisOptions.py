@@ -3,7 +3,6 @@
 # =======
 
 from os import path
-import logging
 from PyQt4 import QtGui, QtCore
 from Core import Data
 from ..Base import ExoBase, LoadFileWidget

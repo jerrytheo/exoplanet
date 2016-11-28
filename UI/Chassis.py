@@ -4,10 +4,6 @@
 
 # Packages
 # --------
-import sys
-from os import path
-import logging
-import pickle
 from PyQt4 import QtGui, QtCore
 
 # UIs

@@ -2,7 +2,7 @@
 # Imports
 # =======
 
-import os
+from os import path
 import pickle
 from ..Base import ExoBase
 from .PreAnalysisForm import PreAnalysisForm
@@ -79,7 +79,7 @@ class WorkspaceUI(ExoBase):
             newfile = True
 
         if newfile is True:
-            home = os.path.expanduser('~')
+            home = path.expanduser('~')
             filter_ = ('Exoplanet Workspace (*.exws)')
             dtitle = 'Save As' if newfile else 'Save'
             fname = QtGui.QFileDialog.getSaveFileName(self, dtitle, home,
@@ -94,7 +94,7 @@ class WorkspaceUI(ExoBase):
                 pickle.dump(self.post_options.workspace, workfile, -1)
                 self.stat.showMessage('Saved Workspace.')
                 self.post_options.workspace['Filename'] = fname
-                ftitle = os.path.splitext(os.path.split(fname)[1])[0]
+                ftitle = path.splitext(path.split(fname)[1])[0]
                 ind = self.parent().parent().currentIndex()
                 self.parent().parent().parent().setTabText(ind, ftitle)
             except pickle.PicklingError as err:

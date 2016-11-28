@@ -2,7 +2,6 @@
 # Imports
 # =======
 
-import logging
 from os import path
 from random import shuffle
 from ..Base import ExoCanvas, ComboBox
@@ -132,8 +131,6 @@ class RegressionLine(QtGui.QDialog):
         random = False
         if sender is self.plotCombo:
             self._feat = ind
-            logging.info('RegrVis:plotCombo index ' + str(self._feat) +
-                         ' selected.')
         elif sender is self.refrBtn:
             random = True
         num = round(self._n_samp * self._frac)
@@ -143,7 +140,6 @@ class RegressionLine(QtGui.QDialog):
         self.regrCanvas.updatePlot(x, y, num, self._feat, random)
 
     def changeValue(self, value):
-        logging.info('RegrVis:Slider value changed to ' + str(value) + '.')
         self._frac = (value+1)/100
         self.rePlot()
 
@@ -160,7 +156,6 @@ class RegressionLine(QtGui.QDialog):
             self.regrCanvas.save(dname, feat)
 
         self.parent().parent().stat.showMessage('Visuals Saved')
-        logging.info('RegrVis:Visuals Saved')
 
 
 # Regression Line Canvas
@@ -188,7 +183,7 @@ class RegrCanvas(ExoCanvas):
         del(x)
         del(y)
         x = []
-        y = [[],[]]
+        y = [[], []]
         for i, tup in enumerate(points):
             x.append(tup[0])
             y[0].append(tup[1])

@@ -6,7 +6,7 @@
 # --------
 import pickle
 from os import path
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui
 
 # UIs
 # ---

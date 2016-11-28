@@ -2,8 +2,6 @@
 # Imports
 # =======
 
-import csv
-import logging
 from os import path
 from sklearn.metrics import roc_curve
 from sklearn.multiclass import OneVsRestClassifier
@@ -78,7 +76,6 @@ class ROC(QtGui.QDialog):
                 fpr, tpr, thr = roc_curve(y_true, y_pred[:, i], pos_label=i)
                 rocVals[self._labels[i]] = (fpr, tpr)
         except Exception as err:
-            logging.error('Evaluation:ROC Curve:' + str(err))
             rocVals = None
         return rocVals
 
@@ -87,7 +84,6 @@ class ROC(QtGui.QDialog):
             self.rocCanvas.showAll(self.roc)
         else:
             lab = self._labels[ind]
-            logging.info('ClassVis:plotCombo index ' + str(ind) + ' selected.')
             self.rocCanvas.updatePlot(*self.roc[lab], lab)
 
     def saveVisual(self):
@@ -101,7 +97,6 @@ class ROC(QtGui.QDialog):
         self.rocCanvas.save(dname, 'All Classes')
 
         self.parent().stat.showMessage('ROC saved')
-        logging.info('ClassVis:ROC saved')
 
     def createFormWidget(self, *args, heads=False):
         hbox = QtGui.QHBoxLayout()
