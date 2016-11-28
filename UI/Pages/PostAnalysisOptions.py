@@ -5,6 +5,7 @@
 from os import path
 import logging
 from PyQt4 import QtGui, QtCore
+from Core import Data
 from ..Base import ExoBase, LoadFileWidget
 from ..Visuals import ROC, ConfusionMatrix
 from ..Visuals import PCoPlot
@@ -123,9 +124,10 @@ class PostAnalysisOptions(ExoBase):
         self.hchkbx = QtGui.QCheckBox(self)
         form.addRow(self.hlabel, self.createHBox(self.hchkbx, 1))
 
-        self.prdbtn = QtGui.QPushButton('Predict Labels')
-        self.prdbtn.setObjectName('Predict')
-        form.addRow(self.createHBox(1, self.prdbtn, 1))
+        prdbtn = QtGui.QPushButton('Predict Labels')
+        prdbtn.setObjectName('Predict')
+        prdbtn.clicked.connect(self.predictLabels)
+        form.addRow(self.createHBox(1, prdbtn, 1))
 
         layout.addLayout(form)
 
@@ -159,3 +161,29 @@ class PostAnalysisOptions(ExoBase):
         elif ltype == 'Regression':
             acc = self.workspace['Model'].model.score(X, y_true)
         return '{0} %'.format(round(acc * 100, 3))
+
+    def predictLabels(self):
+        fpath = self.dbrwse.getFilePath()
+        newdata = Data(fpath)
+        if self.hchkbx.isChecked():
+            newdata.enableHeaders()
+        newdata.process('Clustering')
+        pred = self.workspace['Model'].predictData(newdata.post_data)
+        if pred is None:
+            self.stat.setText('Prediction Failed.')
+            return
+        if self.workspace['Learning Type'] == 'Classification':
+            labels = self.workspace['Data'].post_data['Labels']
+            pred = [labels[int(i)] for i in pred]
+        elif self.workspace['Learning Type'] == 'Clustering':
+            pred = ['Class {0}'.format(i) for i in np.unique(pred)]
+        ws_new = {
+            'Learning Type': 'Prediction',
+            'Data': newdata,
+            'Predicted': pred
+        }
+        showDialog = ViewLabels(self, ws_new)
+        showDialog.setWindowTitle('Exoplanet: Predicted Labels')
+        showDialog.show()
+        showDialog.raise_()
+        showDialog.activateWindow()

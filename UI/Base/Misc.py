@@ -159,8 +159,7 @@ class LoadFileWidget(QtGui.QWidget):
         self.createLayout(fpath)
 
     def createLayout(self, fpath):
-        fpath = 'C:/Users/Jerry/Projects/datasets/Datafiles/' \
-            + 'Combined Cycle Power Plant/ccpp.csv'
+        fpath = 'C:/Users/Jerry/Projects/datasets/Datafiles/Iris/iris.csv'
         self.ledit = QtGui.QLineEdit(fpath, self)
         pbutn = QtGui.QPushButton('Browse', self)
         pbutn.clicked.connect(self.loadFile)

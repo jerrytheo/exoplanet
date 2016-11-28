@@ -2,11 +2,10 @@
 # Imports
 # =======
 
+import logging
 import numpy as np
 from os import path
 from PyQt4 import QtGui, QtCore
-from ..Base import ExoBase
-import logging
 
 
 # Prediction UI
@@ -26,30 +25,34 @@ class ViewLabels(QtGui.QDialog):
 
     def viewMatrix(self, workspace):
         data = workspace['Data'].post_data
-        table = []
-        table.append((*workspace['Data'].headers, 'Predicted Labels'))
-        y_pred = workspace['Predicted']
-
-        if workspace['Learning Type'] != 'Clustering':
+        if workspace['Learning Type'] == 'Classification':
             X = data['Testing'].data
-            y_true = data['Testing'].labels
-            mat = np.insert(X, X.shape[1], y_true, axis=1)
-            mat = np.insert(mat, mat.shape[1], y_pred, axis=1)
-            for i in range(mat.shape[0]):
-                row = []
-                for j in range(mat.shape[1]-2):
-                    row.append(str(mat[i, j]))
-                row.append(data['Labels'][int(mat[i, j+1])])
-                row.append(data['Labels'][int(mat[i, j+2])])
-                table.append(row)
+            X = [[str(X[i, j]) for j in range(X.shape[1])]
+                 for i in range(X.shape[0])]
+            labels = data['Labels']
+            y_tr = data['Testing'].labels
+            y_pr = workspace['Predicted']
+            y_tr = [labels[int(i)] for i in y_tr]
+            y_pr = [labels[int(i)] for i in y_pr]
+            table = [[*xrow, tr, pr] for xrow, tr, pr in zip(X, y_tr, y_pr)]
+
+        elif workspace['Learning Type'] == 'Regression':
+            X = data['Testing'].data
+            X = [[str(X[i, j]) for j in range(X.shape[1])]
+                 for i in range(X.shape[0])]
+            y_tr = data['Testing'].labels
+            y_tr = [str(i) for i in y_tr]
+            y_pr = [str(i) for i in workspace['Predicted']]
+            table = [[*xrow, tr, pr] for xrow, tr, pr in zip(X, y_tr, y_pr)]
 
         else:
-            mat = np.insert(data, data.shape[1], y_pred, axis=1)
-            for i in range(mat.shape[0]):
-                row = []
-                for j in range(mat.shape[1]):
-                    row.append(str(mat[i, j]))
-                table.append(row)
+            X = data
+            X = [[str(X[i, j]) for j in range(X.shape[1])]
+                 for i in range(X.shape[0])]
+            y_pr = [str(i) for i in workspace['Predicted']]
+            table = [[*xrow, pr] for xrow, pr in zip(X, y_pr)]
+
+        table.insert(0, [*workspace['Data'].headers, 'Predicted Labels'])
         return table
 
     def setupDialogLayout(self):
@@ -62,13 +65,14 @@ class ViewLabels(QtGui.QDialog):
         table.setMaximumSize(self.tableSize(table))
         table.setMinimumSize(table.maximumSize())
 
-        savebtn = QtGui.QPushButton('Save Labels')
-
         vbox = QtGui.QVBoxLayout()
         vbox.addWidget(table)
+
         vbox.addStretch(1)
+        savebtn = QtGui.QPushButton('Save Labels')
         vbox.addWidget(savebtn, 1, QtCore.Qt.AlignHCenter)
         vbox.setSpacing(25)
+
         vbox.setMargin(20)
         self.setLayout(vbox)
 
@@ -82,34 +86,18 @@ class ViewLabels(QtGui.QDialog):
         rows = len(self.matrix)
         cols = max(len(row) for row in self.matrix)
 
-        table.setRowCount(rows)
+        table.setRowCount(rows-1)
         table.setColumnCount(cols)
 
         table.setHorizontalScrollMode(QtGui.QAbstractItemView.ScrollPerItem)
-        table.verticalHeader().hide()
-        table.horizontalHeader().hide()
 
-        for i, head in enumerate(self.matrix[0]):
-            lab = QtGui.QLabel(head, self)
-            lab.setAlignment(QtCore.Qt.AlignCenter)
-            lab.setObjectName('MainLabel')
-            table.setCellWidget(0, i+1, lab)
-
-        for i in range(1, len(self.matrix)):
-            lab = QtGui.QLabel(str(i), self)
-            lab.setAlignment(QtCore.Qt.AlignCenter)
-            lab.setObjectName('MainLabel')
-            table.setCellWidget(i, 0, lab)
-
+        table.setHorizontalHeaderLabels(self.matrix[0])
         for i, row in enumerate(self.matrix[1:]):
             for j, val in enumerate(row):
                 lab = QtGui.QLabel(val, self)
                 lab.setAlignment(QtCore.Qt.AlignCenter)
-                table.setCellWidget(i+1, j+1, lab)
-
-        blank = QtGui.QLabel('')
-        blank.setObjectName('BlankLabel')
-        table.setCellWidget(0, 0, blank)
+                lab.setObjectName('InfoLabel')
+                table.setCellWidget(i, j, lab)
 
         table.resizeColumnsToContents()
 
@@ -119,8 +107,8 @@ class ViewLabels(QtGui.QDialog):
         '''
         Sets the size of the table appropriately.
         '''
-        w = 2
-        h = 2
+        w = 4
+        h = 4
 
         for i in range(table.columnCount()):
             w += table.columnWidth(i)
@@ -130,7 +118,10 @@ class ViewLabels(QtGui.QDialog):
         parent_height = self.parent().size().height()
         parent_width = self.parent().size().width()
 
-        if w > parent_width*0.7:
-            w = parent_width*0.7
+        if w > parent_width*0.9:
+            w = parent_width*0.9
             h += table.horizontalScrollBar().height()
+        if h > parent_height*0.7:
+            h = parent_height*0.7
+            w += table.verticalScrollBar().width()
         return QtCore.QSize(w, h)

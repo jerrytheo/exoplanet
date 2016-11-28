@@ -237,10 +237,6 @@ QDialog QCheckBox {
 
 /* Table Widget
    ------------ */
-QTableView {
-    gridline-color: #282845;
-    border-top: 1px solid #282845;
-    border-left: 1px solid #282845;}
 QTableWidget QLabel#InfoLabel {
     color: #3D3D3D;
     font-size: 10pt;
@@ -261,6 +257,13 @@ QTableWidget QLabel#MainLabel {
     font-weight: bold;
     background: #FAFAF0;
     padding: 3px 3px 3px 3px;}
+QHeaderView {
+    background: #FAFAF0;
+    color: #282845;
+    font-size: 12pt;
+    font-weight: bold;}
+QTableView {
+    border: 1px solid #004000;}
 
 /*
     Start Styles

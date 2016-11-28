@@ -36,11 +36,10 @@ class ConfusionMatrix(QtGui.QDialog):
         self.confMat = CMatrix(self, self.conf, self._labels)
         savebtn = QtGui.QPushButton('Save', self)
         savebtn.clicked.connect(self.saveVisual)
-        
+
         layout = QtGui.QVBoxLayout()
         layout.addWidget(self.confMat)
         layout.addSpacing(25)
-        layout.addLayout(saveLayout)
         layout.addWidget(savebtn, 1, QtCore.Qt.AlignHCenter)
         layout.setMargin(10)
 
