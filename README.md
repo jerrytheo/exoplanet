@@ -23,4 +23,4 @@ You should have received a copy of the GNU General Public License along with thi
 **Mohinish Lokesh Reddy**, <mohinishlokesh96@gmail.com>
 
 #### Design
-Our gratitude goes out to **Suryoday Basak**, <suryodaybasak@gmail.com> for providing us with insightful guidance and support during the initial stages of development and the Interface layout and design.
+Our gratitude goes out to **Suryoday Basak**, <suryodaybasak@gmail.com> for providing us with insightful guidance and support during the initial stages of development.

@@ -1,1 +1,1 @@
-from .ExoPlanet import ExoPlanet
+from .StartApp import ExoPlanet

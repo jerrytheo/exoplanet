@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
 from PyQt4 import QtGui
-from UI.ExoPlanet import ExoPlanet
+from UI import ExoPlanet
 
 
 # Set Default Styles
