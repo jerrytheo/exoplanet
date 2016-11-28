@@ -94,5 +94,8 @@ class WorkspaceUI(ExoBase):
                 pickle.dump(self.post_options.workspace, workfile, -1)
                 self.stat.showMessage('Saved Workspace.')
                 self.post_options.workspace['Filename'] = fname
+                ftitle = os.path.splitext(os.path.split(fname)[1])[0]
+                ind = self.parent().parent().currentIndex()
+                self.parent().parent().parent().setTabText(ind, ftitle)
             except pickle.PicklingError as err:
                 self.stat.showMessage('Save failed. Try again.')

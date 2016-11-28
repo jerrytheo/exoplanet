@@ -23,7 +23,6 @@ class Chassis(QtGui.QTabWidget):
     '''
     Widget that produces tabs.
     '''
-
     def __init__(self, parent):
         super().__init__(parent)
         self.setProperties()
@@ -35,7 +34,6 @@ class Chassis(QtGui.QTabWidget):
         Sets properties of the tab.
         '''
         self.setUsesScrollButtons(True)
-
         tBar = self.tabBar()
         tBar.setTabsClosable(True)
         tBar.tabCloseRequested[int].connect(self.closeTab)
@@ -46,7 +44,7 @@ class Chassis(QtGui.QTabWidget):
         '''
         Creates a new tab.
         '''
-        self.addTab(Engine(self), ' untitled ')
+        self.addTab(Engine(self), 'Untitled')
 
     def closeTab(self, index=None):
         '''

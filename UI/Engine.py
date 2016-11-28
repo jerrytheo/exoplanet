@@ -45,7 +45,7 @@ class Engine(ExoBase):
         self.setObjectName('Engine')
         self.layout.setMargin(0)
 
-    def startEngine(self, defaultState=None):
+    def startEngine(self, defaultState):
         '''
         Changes the active page.
             1. Closes the current active page.
@@ -54,7 +54,10 @@ class Engine(ExoBase):
         '''
         self.activePage.close()
         del(self.activePage)
-        self.activePage = WorkspaceUI(self, defaultState)
+        if defaultState is False:
+            self.activePage = WorkspaceUI(self, None)
+        else:
+            self.activePage = WorkspaceUI(self, defaultState)
         self.activePage.setObjectName('ActivePage')
         self.layout.addWidget(self.activePage)
 
@@ -82,4 +85,8 @@ class Engine(ExoBase):
                                                   filter=filter_)
         with open(fname, 'rb') as workfile:
             defaultState = pickle.load(workfile)
+
+        ftitle = path.splitext(path.split(fname)[1])[0]
+        ind = self.parent().parent().currentIndex()
+        self.parent().parent().setTabText(ind, ftitle)
         self.startEngine(defaultState)

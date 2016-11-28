@@ -26,12 +26,18 @@ QMenuBar::item:!selected {
 QMenu {
     font: normal 9pt "Catamaran";
     padding-top: 5px;
-    background: #FAFAF0;}
+    background: #FAFAF0;
+    color: #3D3D3D;}
 QMenu::item {
-    padding: 3px 15px 3px 30px;
+    padding: 3px 15px 3px 40px;
     background: transparent;}
 QMenu::item:selected {
     background: #E7F2ED;}
+QMenu::separator {
+    height: 1px;
+    background: #DDDDDD;
+    margin-left: 20px;
+    margin-right: 5px;}
 
 /* Tab Bar
    ------- */
@@ -71,6 +77,11 @@ QTabBar::tab:!selected {
     border-right: 1px solid #004000;}
 QTabBar::tab:first:!selected {
     border-left: 1px solid #004000;}
+QTabBar::close-button {
+    image: url(Info/Images/xmark-white.png);
+    height: 6px;
+    width: 6px;
+}
 
 /* Scroll Bar
    ---------- */

@@ -31,7 +31,7 @@ class Start(ExoBase):
         Connects the clicked signals for createButton and loadButton.
         '''
         self.createButton.clicked.connect(self.parent().startEngine)
-        # self.loadButton.clicked.connect(self.parent().buttonClicked)
+        self.loadButton.clicked.connect(self.parent().load)
 
     def setupWidget(self):
         '''
