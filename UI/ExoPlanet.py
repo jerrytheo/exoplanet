@@ -24,7 +24,7 @@ import sys
 import os
 from PyQt4 import QtGui, QtCore
 from .Chassis import Chassis
-from .Base import TextFileDialog
+from .Base import LicenseDialog
 
 
 # Application Main Window
@@ -103,12 +103,9 @@ class ExoPlanet(QtGui.QMainWindow):
     def createHelpMenu(self):
         helpMenu = self.menu.addMenu('Help')
         # Help Menu
-        readmeView = QtGui.QAction('View Readme', self)
-        readmeView.triggered.connect(self.openReadme)
-        licenseView = QtGui.QAction('View License', self)
+        licenseView = QtGui.QAction('License', self)
         licenseView.triggered.connect(self.openLicense)
 
-        helpMenu.addAction(readmeView)
         helpMenu.addAction(licenseView)
 
     def addFonts(self):
@@ -123,10 +120,10 @@ class ExoPlanet(QtGui.QMainWindow):
                 fontpath = os.path.join(fontdir, fontfile)
                 QtGui.QFontDatabase.addApplicationFont(fontpath)
 
-    def openReadme(self):
-        readmefile = "README.txt"
-        TextFileDialog(self, readmefile, "Readme")
-
     def openLicense(self):
-        readmefile = "COPYING.txt"
-        TextFileDialog(self, readmefile, "License")
+        licensefile = "COPYING.txt"
+        ldialog = LicenseDialog(self, licensefile)
+        ldialog.setWindowTitle('Exoplanet: License GNU GPLv3')
+        ldialog.show()
+        ldialog.raise_()
+        ldialog.activateWindow()

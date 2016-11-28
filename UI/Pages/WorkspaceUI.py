@@ -26,7 +26,7 @@ from ..Base import ExoBase
 from .PreAnalysisForm import PreAnalysisForm
 from .PostAnalysisOptions import PostAnalysisOptions
 from PyQt4 import QtGui, QtCore
-from Core.ModelBuild import Model
+from Core.Model import Model
 
 
 # Workspace UI
