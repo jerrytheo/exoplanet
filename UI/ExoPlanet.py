@@ -58,17 +58,17 @@ class ExoPlanet(QtGui.QMainWindow):
         # Save
         saveAct = QtGui.QAction('Save', self)
         saveAct.setShortcut('Ctrl+S')
-        #saveAct.triggered.connect(centralWid.currentWidget().save(new=False))
+        saveAct.triggered.connect(centralWid.currentWidget().save)
 
         # Save As
         saveasAct = QtGui.QAction('Save As', self)
         saveasAct.setShortcut('Ctrl+Shift+S')
-        #saveasAct.triggered.connect(centralWid.currentWidget().save(new=True))
+        saveasAct.triggered.connect(centralWid.currentWidget().saveAs)
 
         # Open
         openAct = QtGui.QAction('Open', self)
         openAct.setShortcut('Ctrl+O')
-        #openAct.triggered.connect(centralWid.currentWidget().load())
+        openAct.triggered.connect(centralWid.currentWidget().load)
 
         # Quit
         quitAct = QtGui.QAction('Quit', self)

@@ -292,7 +292,7 @@ class ParameterForm(ExoBase):
 
         return parameters
 
-    def setDefaults(self, default, algorithm):
+    def setDefaults(self, default):
         '''
         Set default values for each parameter.
         '''

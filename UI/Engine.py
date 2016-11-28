@@ -4,10 +4,8 @@
 
 # Packages
 # --------
-import sys
-from os import path
-import logging
 import pickle
+from os import path
 from PyQt4 import QtGui, QtCore
 
 # UIs
@@ -47,7 +45,7 @@ class Engine(ExoBase):
         self.setObjectName('Engine')
         self.layout.setMargin(0)
 
-    def startEngine(self):
+    def startEngine(self, defaultState=None):
         '''
         Changes the active page.
             1. Closes the current active page.
@@ -56,12 +54,32 @@ class Engine(ExoBase):
         '''
         self.activePage.close()
         del(self.activePage)
-        self.activePage = WorkspaceUI(self)
+        self.activePage = WorkspaceUI(self, defaultState)
         self.activePage.setObjectName('ActivePage')
         self.layout.addWidget(self.activePage)
 
     def save(self):
         if isinstance(self.activePage, Start):
-            self.stat.setText('You can\'t save here.')
+            self.stat.showMessage('You can\'t save here.')
             return
-        fpath = QtGui.QFileDialog(self)
+        else:
+            self.activePage.save(False)
+
+    def saveAs(self):
+        if isinstance(self.activePage, Start):
+            self.stat.showMessage('You can\'t save here.')
+            return
+        else:
+            self.activePage.save(True)
+
+    def load(self):
+        '''
+        Loads an existing Workspace.
+        '''
+        home = path.expanduser('~')
+        filter_ = ('Exoplanet Workspace (*.exws)')
+        fname = QtGui.QFileDialog.getOpenFileName(self, 'File location', home,
+                                                  filter=filter_)
+        with open(fname, 'rb') as workfile:
+            defaultState = pickle.load(workfile)
+        self.startEngine(defaultState)

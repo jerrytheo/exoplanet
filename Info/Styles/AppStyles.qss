@@ -42,9 +42,9 @@ QTabWidget::pane {
 QTabWidget::tab-bar {
     left: 5px;}
 QTabBar::tab {
-    padding: 4px 8px 4px 8px;
-    border-top-right-radius: 2px;
-    border-top-left-radius: 2px;
+    padding: 8px 8px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
     min-width: 8ex;}
 QTabBar::tab:selected {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -66,7 +66,7 @@ QTabBar::tab:only-one:selected {
 QTabBar::tab:!selected {
     margin-top: 2px;
     background-color: #558055;
-    color: #FAFAF0;
+    color: #EAEAE0;
     border-top: 1px solid #004000;
     border-right: 1px solid #004000;}
 QTabBar::tab:first:!selected {

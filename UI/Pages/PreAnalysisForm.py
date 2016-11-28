@@ -35,6 +35,9 @@ class PreAnalysisForm(ExoBase):
         self.loadAlgorithms()
         self.setupWidgetLayout()
         self.setupConnections()
+        if defaultState is not None:
+            self.initialiseState(defaultState)
+            self.loadData(True)
 
     def loadAlgorithms(self):
         '''Loads the list of Algorithms available to select from.'''
@@ -82,6 +85,23 @@ class PreAnalysisForm(ExoBase):
         layout.setMargin(40)
 
         self.setLayout(layout)
+
+    def initialiseState(self, defaultState):
+        # Learning Type
+        ltype = self.tcombo.findText(defaultState['Learning Type'])
+        self.tcombo.setCurrentIndex(ltype)
+        # Algorithm
+        algo = self.acombo.findText(defaultState['Algorithm'])
+        self.acombo.setCurrentIndex(algo)
+        # Data
+        self.data = defaultState['Data']
+        fpath = path.join(self.data.filedir, self.data.filename)
+        if path.isfile(fpath):
+            self.dbrwse.setFilePath(fpath)
+        else:
+            self.stat.showMessage('Filepath invalid.')
+        # Parameters
+        self.pform.setDefaults(defaultState['Parameters'])
 
     def setupAlgoLayout(self, layout):
         self.tcombo = ComboBox(self)
@@ -158,9 +178,10 @@ class PreAnalysisForm(ExoBase):
         self.pform = ParameterForm(self, algo, ltype)
         self.pform_layout.addWidget(self.pform)
 
-    def loadData(self):
-        data_file = self.dbrwse.getFilePath()
-        self.data = Data(data_file)
+    def loadData(self, pre=False):
+        if not pre:
+            data_file = self.dbrwse.getFilePath()
+            self.data = Data(data_file)
         self.hchkbx.setCheckState(QtCore.Qt.Unchecked)
         if self.data.check() is False:
             self.parent().stat.showMessage('Data load failed.')

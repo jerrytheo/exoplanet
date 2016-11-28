@@ -10,6 +10,14 @@ from random import shuffle
 from copy import deepcopy
 
 
+# Required Information
+# ====================
+
+class _DataSet:
+    data = None
+    labels = None
+
+
 # Data Class
 # ==========
 
@@ -61,14 +69,10 @@ class Data:
             labels, label_names = self.extractLabels(data, label_col, ltype)
             data = self.convert(data)
 
-            class DataSet:
-                data = None
-                labels = None
-
-            tr_data = DataSet()
+            tr_data = _DataSet()
             tr_data.data = data[:set_sizes]
             tr_data.labels = labels[:set_sizes]
-            te_data = DataSet()
+            te_data = _DataSet()
             te_data.data = data[set_sizes:]
             te_data.labels = labels[set_sizes:]
 
