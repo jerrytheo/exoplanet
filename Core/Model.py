@@ -20,8 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # Imports
 # =======
 
-from importlib import import_module
 import json
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+from sklearn.linear_model import LinearRegression, Lasso, Ridge
 
 
 # Required Information
@@ -29,41 +35,20 @@ import json
 
 _algorithms = {
     # Classification
-    'K-Nearest Neighbors': ('sklearn.neighbors', 'KNeighborsClassifier'),
-    'Decision Tree': ('sklearn.tree', 'DecisionTreeClassifier'),
-    'Linear Discriminant Analysis':
-        ('sklearn.discriminant_analysis', 'LinearDiscriminantAnalysis'),
-    'Support Vector Classifier': ('sklearn.svm', 'SVC'),
-    'Gaussian Naive Bayes': ('sklearn.naive_bayes', 'GaussianNB'),
+    'K-Nearest Neighbors': KNeighborsClassifier,
+    'Decision Tree': DecisionTreeClassifier,
+    'Linear Discriminant Analysis': LinearDiscriminantAnalysis,
+    'Support Vector Classifier': SVC,
+    'Gaussian Naive Bayes': GaussianNB,
 
     # Clustering
-    'K-Means': ('sklearn.cluster', 'KMeans'),
+    'K-Means': KMeans,
 
     # Regression
-    'Gaussian Process': ('sklearn.gaussian_process', 'GaussianProcess'),
-    'Linear': ('sklearn.linear_model', 'LinearRegression'),
-    'Lasso': ('sklearn.linear_model', 'Lasso'),
-    'Ridge': ('sklearn.linear_model', 'Ridge'),
+    'Linear': LinearRegression,
+    'Lasso': Lasso,
+    'Ridge': Ridge,
 }
-
-
-# Import required modules.
-# =======================
-
-def _importsklearnAPI(algorithm):
-    """
-    Calls _import to import and append the algorithm's API from the sklearn
-    package.
-
-    Parameters
-    ----------
-    algorithm -- Algorithm whose API to import.
-    """
-    API = _algorithms[algorithm]
-    pkg = API[0]
-    mod = API[1]
-    cls = getattr(import_module(pkg), mod)
-    return cls
 
 
 # Algorithm Model
@@ -86,7 +71,7 @@ class Model:
     """
 
     def __init__(self, algorithm, params):
-        self.model = _importsklearnAPI(algorithm)(**params)
+        self.model = _algorithms[algorithm](**params)
 
     def fitData(self, data, labels=None):
         if labels is None:
