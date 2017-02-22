@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 ## Authors
 
 #### Principal Authors
-**Abhijit Jeremiel Theophilus**, <abhijit.theo@gmail.com>      
+**Abhijit Jeremiel Theophilus**, <abhitheo96@gmail.com>      
 **Mohinish Lokesh Reddy**, <mohinishlokesh96@gmail.com>
 
 #### Design
