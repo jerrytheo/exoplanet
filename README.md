@@ -20,4 +20,4 @@ You should have received a copy of the GNU General Public License along with thi
 Abhijit Jeremiel Theophilus, <abhijit.theo@gmail.com>      
 
 ## Thanks
-My gratitude goes out to Suryoday Basak, <suryodaybasak@gmail.com> for providing us with insightful guidance and support during the initial stages of development.
+My gratitude goes out to Suryoday Basak, <suryodaybasak@gmail.com> for providing me with insightful guidance and support during the initial stages of development.
