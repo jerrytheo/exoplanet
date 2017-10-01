@@ -16,10 +16,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-## Authors
-
-#### Principal Authors
+## Author
 **Abhijit Jeremiel Theophilus**, <abhijit.theo@gmail.com>      
 
-#### Design
+## Thanks
 My gratitude goes out to **Suryoday Basak**, <suryodaybasak@gmail.com> for providing us with insightful guidance and support during the initial stages of development.
