@@ -1,6 +1,6 @@
 '''
 ExoPlanet Pre-Analysis Form
-Copyright (C) 2016  Abhijit J. Theophilus, Mohinish L. Reddy
+Copyright (C) 2016  Abhijit J. Theophilus
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

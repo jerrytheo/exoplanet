@@ -8,7 +8,7 @@
 
 ## License
 
-Copyright (C) 2016  Abhijit J. Theophilus, Mohinish L. Reddy
+Copyright (C) 2016  Abhijit J. Theophilus
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -19,8 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 ## Authors
 
 #### Principal Authors
-**Abhijit Jeremiel Theophilus**, <abhitheo96@gmail.com>      
-**Mohinish Lokesh Reddy**, <mohinishlokesh96@gmail.com>
+**Abhijit Jeremiel Theophilus**, <abhijit.theo@gmail.com>      
 
 #### Design
-Our gratitude goes out to **Suryoday Basak**, <suryodaybasak@gmail.com> for providing us with insightful guidance and support during the initial stages of development.
+My gratitude goes out to **Suryoday Basak**, <suryodaybasak@gmail.com> for providing us with insightful guidance and support during the initial stages of development.
